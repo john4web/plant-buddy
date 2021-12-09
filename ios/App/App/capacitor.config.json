@@ -1,0 +1,6 @@
+{
+	"appId": "com.companyname.plantbuddy",
+	"appName": "plant-buddy",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
