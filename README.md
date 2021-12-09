@@ -1,24 +1,18 @@
-# plant-buddy
+# 🪴 Plant Buddy 🪴
 
-## Project setup
-```
-npm install
-```
+A **fancy** mobile app to manage your pot plants! 🪴  
+Made with ❤️
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 🛠️ Tech-Stack
 
-### Lints and fixes files
-```
-npm run lint
-```
+- [Vue.js](https://vuejs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Capacitor](https://capacitorjs.com/)
+- [Tailwind](https://tailwindcss.com/)
+- [Firebase](https://firebase.google.com/)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 💻Development-Team
+
+- Martina Scharrer - [@martinascharrer](https://github.com/martinascharrer)
+- Johannes Gerstbauer - [@john4web](https://github.com/john4web)
