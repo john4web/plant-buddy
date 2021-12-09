@@ -1,6 +1,6 @@
-# 🪴 Plant Buddy 🪴
+# 🌱 Plant Buddy 🌱
 
-A **fancy** mobile app to manage your pot plants! 🪴  
+A **fancy** mobile app to manage your pot plants! 🌵  
 Made with ❤️
 
 
