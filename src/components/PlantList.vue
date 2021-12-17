@@ -26,9 +26,6 @@ import PlantService from "@/services/PlantService";
 
 export default defineComponent({
   name: "PlantList",
-  props: {
-    msg: String,
-  },
   setup() {
     const plantName = ref("");
     const {
