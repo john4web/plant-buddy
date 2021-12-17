@@ -1,60 +1,28 @@
 <template>
-  <nav class="bg-white shadow-lg">
+  <nav class="bg-white">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-start md:justify-center">
         <div class="flex space-x-7">
           <!-- Desktop Navbar items -->
-          <div class="hidden md:flex items-center space-x-1">
+          <div class="hidden md:flex items-center space-x-1 text-navy">
             <router-link
               to="/"
-              class="
-                py-4
-                px-2
-                text-gray-500
-                font-semibold
-                hover:text-green-500
-                transition
-                duration-300
-              "
+              class="py-4 px-2 font-semibold transition duration-300"
               >Home</router-link
             >
             <router-link
               to="/my-garden"
-              class="
-                py-4
-                px-2
-                text-gray-500
-                font-semibold
-                hover:text-green-500
-                transition
-                duration-300
-              "
+              class="py-4 px-2 font-semibold transition duration-300"
               >My Garden</router-link
             >
             <router-link
               to="/new-buddy"
-              class="
-                py-4
-                px-2
-                text-gray-500
-                font-semibold
-                hover:text-green-500
-                transition
-                duration-300
-              "
+              class="py-4 px-2 font-semibold transition duration-300"
               >New Buddy</router-link
             >
             <router-link
               to="/profile"
-              class="
-                py-4
-                px-2
-                text-gray-500
-                font-semibold
-                hover:text-green-500
-                transition
-                duration-300
-              "
+              class="py-4 px-2 font-semibold transition duration-300"
               >Profile</router-link
             >
           </div>
@@ -62,83 +30,50 @@
 
         <!-- Mobile menu button -->
         <div class="md:hidden flex items-center py-4 px-2">
-          <button class="outline-none" @click="toggleMenu">
-            <svg
-              class="w-6 h-6 text-gray-500 hover:text-green-500"
-              x-show="!showMenu"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+          <button class="outline-none h-6" @click="toggleMenu">
+            <div class="space-y-2">
+              <span class="block w-5 h-1 bg-navy rounded-full"></span>
+              <span class="block w-8 h-1 bg-navy rounded-full"></span>
+            </div>
           </button>
         </div>
       </div>
     </div>
     <!-- mobile menu -->
-    <div :class="{ hidden: !menuIsOpen }">
+    <div
+      :class="{ hidden: !menuIsOpen }"
+      class="h-screen w-screen fixed text-navy bg-white px-6 text-xl"
+    >
       <ul class="">
         <li>
           <router-link
+            @click="toggleMenu"
             to="/"
-            class="
-              block
-              text-sm
-              px-2
-              py-4
-              hover:bg-green-500
-              transition
-              duration-300
-            "
+            class="p-4 transition duration-300 inline-block mb-2"
             >Home</router-link
           >
         </li>
         <li>
           <router-link
+            @click="toggleMenu"
             to="/my-garden"
-            class="
-              block
-              text-sm
-              px-2
-              py-4
-              hover:bg-green-500
-              transition
-              duration-300
-            "
+            class="p-4 transition duration-300 inline-block mb-2"
             >My Garden</router-link
           >
         </li>
         <li>
           <router-link
+            @click="toggleMenu"
             to="/new-buddy"
-            class="
-              block
-              text-sm
-              px-2
-              py-4
-              hover:bg-green-500
-              transition
-              duration-300
-            "
+            class="p-4 transition duration-300 inline-block mb-2"
             >New Buddy</router-link
           >
         </li>
         <li>
           <router-link
+            @click="toggleMenu"
             to="/profile"
-            class="
-              block
-              text-sm
-              px-2
-              py-4
-              hover:bg-green-500
-              transition
-              duration-300
-            "
+            class="p-4 transition duration-300 inline-block mb-2"
             >Profile</router-link
           >
         </li>
@@ -169,20 +104,15 @@ export default defineComponent({
 
 <style scoped>
 .router-link-exact-active {
-  display: block;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: white;
-  background-color: #10b981;
-  font-weight: 600;
+  background-color: #d0e1da;
+  border-radius: 10px;
 }
 
 @media (min-width: 768px) {
   .router-link-exact-active {
-    color: #10b981;
-    font-weight: 600;
-    border-bottom: 4px solid #10b981;
+    border-bottom: 4px solid #d0e1da;
     background-color: white;
+    border-radius: 0;
   }
 }
 </style>
