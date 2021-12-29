@@ -18,6 +18,7 @@ module.exports = {
       },
     },
   },
+  mode: 'jit',
   variants: {
     extend: {},
   },
