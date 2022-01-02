@@ -2,9 +2,9 @@
   <div>
     <h1>This is the register page</h1>
     <label for="email">E-Mail</label>
-    <input v-model="email" name="email" type="email" />
+    <input v-model="email" id="email" type="email" />
     <label for="password">Password</label>
-    <input v-model="password" name="password" type="password" />
+    <input v-model="password" id="password" type="password" />
     <button @click="register">Register</button>
   </div>
 </template>
