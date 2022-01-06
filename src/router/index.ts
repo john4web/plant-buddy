@@ -72,10 +72,10 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.authRequired && !AuthService.isAuthorized()) {
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.authRequired && !await AuthService.isAuthorized()) {
     next("/login");
-  } else if (to.name === "Login" && AuthService.isAuthorized()) {
+  } else if ((to.name === "Login" || to.name === "Register") && await AuthService.isAuthorized()) {
     next("/");
   } else {
     next();

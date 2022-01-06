@@ -5,11 +5,19 @@ import {
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
+  setPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
 
 class AuthService {
   isAuthorized = () => {
-    return Boolean(getAuth(firebaseApp).currentUser);
+    const auth = getAuth(firebaseApp);
+    return new Promise((resolve, reject) => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+      }, reject);
+    })
   };
 
   createUser = async (
@@ -31,6 +39,7 @@ class AuthService {
   ): Promise<UserCredential | null> => {
     const auth = getAuth(firebaseApp);
     try {
+      await setPersistence(auth, browserSessionPersistence);
       return await signInWithEmailAndPassword(auth, email, password);
     } catch (e) {
       console.log("Sthg went wrong when signing in.", e);
