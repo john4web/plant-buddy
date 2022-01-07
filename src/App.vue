@@ -23,7 +23,11 @@ export default defineComponent({
     const route = useRoute();
 
     const isAuthorized = computed(() => {
-      return !(route.name === "Register" || route.name === "Login");
+      return !(
+        route.name === "Register" ||
+        route.name === "Login" ||
+        route.name === "Authenticate"
+      );
     });
 
     return { route, menuIsOpen, isAuthorized };

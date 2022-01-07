@@ -3,6 +3,7 @@ import AuthService from "@/services/AuthService";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import Authenticate from "@/views/Authenticate.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +22,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/register",
     name: "Register",
     component: Register,
+    meta: { authRequired: false },
+  },
+  {
+    path: "/authenticate",
+    name: "Authenticate",
+    component: Authenticate,
     meta: { authRequired: false },
   },
   {
@@ -67,8 +74,8 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.meta.authRequired && !await AuthService.isAuthorized()) {
-    next("/login");
-  } else if ((to.name === "Login" || to.name === "Register") && await AuthService.isAuthorized()) {
+    next("/authenticate");
+  } else if ((to.name === "Login" || to.name === "Register" || to.name === "Authenticate") && await AuthService.isAuthorized()) {
     next("/");
   } else {
     next();
