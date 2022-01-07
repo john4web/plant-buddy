@@ -38,18 +38,11 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "new-buddy" */ "@/views/NewBuddy.vue"),
   },
   {
-    path: "/buddy-detail",
+    path: "/buddy-detail/:id",
     name: "BuddyDetail",
     meta: { authRequired: true },
     component: () =>
       import(/* webpackChunkName: "buddy-detail" */ "@/views/BuddyDetail.vue"),
-  },
-  {
-    path: "/edit-buddy",
-    name: "EditBuddy",
-    meta: { authRequired: true },
-    component: () =>
-      import(/* webpackChunkName: "edit-buddy" */ "@/views/EditBuddy.vue"),
   },
   {
     path: "/profile",
