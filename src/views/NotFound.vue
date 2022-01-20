@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h1>404 Not Found!</h1>
-  </div>
+    <div>
+        <h1>404 Not Found!</h1>
+    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "NotFound",
+    name: 'NotFound',
 });
 </script>
