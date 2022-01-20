@@ -54,13 +54,6 @@ const routes: Array<RouteRecordRaw> = [
             ),
     },
     {
-        path: '/profile',
-        name: 'Profile',
-        meta: { authRequired: true },
-        component: () =>
-            import(/* webpackChunkName: "profile" */ '@/views/Profile.vue'),
-    },
-    {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         meta: { authRequired: false },

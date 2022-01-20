@@ -20,11 +20,6 @@
                             class="py-4 px-2 font-semibold"
                             >New Buddy</router-link
                         >
-                        <router-link
-                            to="/profile"
-                            class="py-4 px-2 font-semibold"
-                            >Profile</router-link
-                        >
                     </div>
                 </div>
 
@@ -32,14 +27,43 @@
                 <div class="md:hidden flex items-center py-4 px-2">
                     <button class="outline-none" @click="toggleMenu">
                         <div
-                            class="h-8 w-8 relative transition-all ease-in-out duration-200"
+                            class="
+                                h-8
+                                w-8
+                                relative
+                                transition-all
+                                ease-in-out
+                                duration-200
+                            "
                             :class="{ 'menu__button--open': menuIsOpen }"
                         >
                             <span
-                                class="block absolute w-5 h-1 bg-navy rounded-full top-2 transition-all ease-in-out duration-200"
+                                class="
+                                    block
+                                    absolute
+                                    w-5
+                                    h-1
+                                    bg-navy
+                                    rounded-full
+                                    top-2
+                                    transition-all
+                                    ease-in-out
+                                    duration-200
+                                "
                             ></span>
                             <span
-                                class="block absolute w-8 h-1 bg-navy rounded-full top-5 transition-all ease-in-out duration-200"
+                                class="
+                                    block
+                                    absolute
+                                    w-8
+                                    h-1
+                                    bg-navy
+                                    rounded-full
+                                    top-5
+                                    transition-all
+                                    ease-in-out
+                                    duration-200
+                                "
                             ></span>
                         </div>
                     </button>
@@ -49,7 +73,20 @@
         <!-- mobile menu -->
         <div
             :class="{ hidden: !menuIsOpen }"
-            class="w-screen h-[calc(100vh-4rem)] fixed text-navy bg-white px-6 text-xl flex flex-col justify-between transition-all ease-in-out duration-200"
+            class="
+                w-screen
+                h-[calc(100vh-4rem)]
+                fixed
+                text-navy
+                bg-white
+                px-6
+                text-xl
+                flex flex-col
+                justify-between
+                transition-all
+                ease-in-out
+                duration-200
+            "
         >
             <ul class="mt-6">
                 <li>
@@ -74,14 +111,6 @@
                         to="/new-buddy"
                         class="p-4 inline-block mb-2"
                         >New Buddy</router-link
-                    >
-                </li>
-                <li>
-                    <router-link
-                        @click="toggleMenu"
-                        to="/profile"
-                        class="p-4 inline-block mb-2"
-                        >Profile</router-link
                     >
                 </li>
             </ul>
