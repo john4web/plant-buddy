@@ -1,28 +1,23 @@
 <template>
     <OverlayLayout>
-        <div>
+        <div class="text-navy p-6">
             <h1>New Buddy</h1>
-            <div>Add a plant to your collection</div>
-            <div>
-                <label for="plantName">Name</label>
-                <input
-                    id="plantName"
-                    v-model="plantName"
-                    class="border shadow rounded py-1 px-3"
-                />
+            <div>Add a plant to your collection.</div>
+            <div class="mt-10 flex-col">
+                <label for="plantName" class="block">Name</label>
+                <input id="plantName" v-model="plantName" class="input block" />
             </div>
-            <div>
-                <label for="plantType">Plant Type</label>
-                <input
-                    v-model="plantType"
-                    class="border shadow rounded py-1 px-3"
-                />
+            <div class="mt-5">
+                <label for="plantType" class="block">Plant Type</label>
+                <input v-model="plantType" class="input block" />
             </div>
-            <div>UPLOAD A PHOTO HERE</div>
+            <div class="p-4">UPLOAD A PHOTO HERE</div>
             <div>Watering</div>
 
             <div class="flex flex-col space-y-2 p-2 w-80">
+                <label for="waterslider">Amount</label>
                 <input
+                    id="waterslider"
                     type="range"
                     class="w-full"
                     min="1"
@@ -50,20 +45,42 @@
                 </button>
             </div>
 
-            <button @click="addNewWaterNotification">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
-                </svg>
+            <button
+                class="p-2 rounded-full bg-navy"
+                @click="addNewWaterNotification"
+            >
+                <div class="h-8 w-8 relative plus-button">
+                    <span
+                        class="
+                            block
+                            absolute
+                            w-5
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-2
+                        "
+                    ></span>
+                    <span
+                        class="
+                            block
+                            absolute
+                            w-8
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-5
+                        "
+                    ></span>
+                </div>
             </button>
+
             <div>Fertilizing</div>
 
             <div class="flex flex-col space-y-2 p-2 w-80">
+                <label for="fertilizeslider">Amount</label>
                 <input
+                    id="fertilizeslider"
                     type="range"
                     class="w-full"
                     min="1"
@@ -91,19 +108,38 @@
                 </button>
             </div>
 
-            <button @click="addNewFertilizingNotification">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
-                </svg>
+            <button
+                class="p-2 rounded-full bg-drakgreen"
+                @click="addNewFertilizingNotification"
+            >
+                <div class="h-8 w-8 relative plus-button">
+                    <span
+                        class="
+                            block
+                            absolute
+                            w-5
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-2
+                        "
+                    ></span>
+                    <span
+                        class="
+                            block
+                            absolute
+                            w-8
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-5
+                        "
+                    ></span>
+                </div>
             </button>
 
             <button
-                class="border rounded shadow bg-green-600 py-1 px-3 text-white"
+                class="button"
                 @click="addPlant({ name: plantName, type: plantType }, true)"
             >
                 Add plant
@@ -166,4 +202,17 @@ export default defineComponent({
 
 
 <style scoped>
+.plus-button span {
+    width: 2rem;
+    top: 0.875rem;
+}
+
+.plus-button span:nth-child(1) {
+    transform: rotate(-90deg);
+}
+
+.plus-button {
+    border: 0;
+    border-radius: 50%;
+}
 </style>
