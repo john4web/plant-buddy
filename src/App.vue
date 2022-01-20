@@ -1,6 +1,4 @@
 <template>
-    <NavBar v-if="isAuthorized" />
-
     <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -9,28 +7,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
-import NavBar from '@/components/NavBar.vue';
+import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default defineComponent({
     name: 'App',
-    components: {
-        NavBar,
-    },
     setup() {
         const menuIsOpen = ref(false);
         const route = useRoute();
 
-        const isAuthorized = computed(() => {
-            return !(
-                route.name === 'Register' ||
-                route.name === 'Login' ||
-                route.name === 'Authenticate'
-            );
-        });
-
-        return { route, menuIsOpen, isAuthorized };
+        return { route, menuIsOpen };
     },
     methods: {
         toggleMenu() {
