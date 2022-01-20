@@ -1,10 +1,9 @@
 <template>
     <DefaultLayout>
-        <div>
-            <h1>My Garden Page</h1>
-            <router-link
-                to="/new-buddy"
-                class="border rounded shadow bg-green-600 py-1 px-3 text-white"
+        <div class="text-navy">
+            <h1>My Garden</h1>
+            <div>All your beloved green buddies in one place.</div>
+            <router-link to="/new-buddy" class="button"
                 >+ Add new Buddy</router-link
             >
             <PlantList />
