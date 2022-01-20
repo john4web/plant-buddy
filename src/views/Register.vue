@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>This is the register page</h1>
+    <router-link to="/authenticate">Back</router-link>
     <label for="email">E-Mail</label>
     <input v-model="email" id="email" type="email" />
     <label for="password">Password</label>

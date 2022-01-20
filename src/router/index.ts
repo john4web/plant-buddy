@@ -3,6 +3,7 @@ import AuthService from "@/services/AuthService";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import Authenticate from "@/views/Authenticate.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +25,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { authRequired: false },
   },
   {
+    path: "/authenticate",
+    name: "Authenticate",
+    component: Authenticate,
+    meta: { authRequired: false },
+  },
+  {
     path: "/my-garden",
     name: "MyGarden",
     meta: { authRequired: true },
@@ -38,18 +45,11 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "new-buddy" */ "@/views/NewBuddy.vue"),
   },
   {
-    path: "/buddy-detail",
+    path: "/buddy-detail/:id",
     name: "BuddyDetail",
     meta: { authRequired: true },
     component: () =>
       import(/* webpackChunkName: "buddy-detail" */ "@/views/BuddyDetail.vue"),
-  },
-  {
-    path: "/edit-buddy",
-    name: "EditBuddy",
-    meta: { authRequired: true },
-    component: () =>
-      import(/* webpackChunkName: "edit-buddy" */ "@/views/EditBuddy.vue"),
   },
   {
     path: "/profile",
@@ -72,10 +72,10 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.authRequired && !AuthService.isAuthorized()) {
-    next("/login");
-  } else if (to.name === "Login" && AuthService.isAuthorized()) {
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.authRequired && !await AuthService.isAuthorized()) {
+    next("/authenticate");
+  } else if ((to.name === "Login" || to.name === "Register" || to.name === "Authenticate") && await AuthService.isAuthorized()) {
     next("/");
   } else {
     next();

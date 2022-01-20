@@ -1,20 +1,10 @@
 <template>
-  <h2 class="font-bold">Add a new plant:</h2>
-  <div class="flex flex-col">
-    <div>
-      <input v-model="plantName" class="border shadow rounded py-1 px-3" />
-      <button
-        class="border rounded shadow bg-green-600 py-1 px-3 text-white"
-        @click="addPlant({ name: plantName, type: 'type' }, true)"
-      >
-        Add plant
-      </button>
-    </div>
-  </div>
   <h2 class="font-bold">List of plants</h2>
   <ul>
     <li v-for="(plant, index) in plants" :key="index">
-      {{ plant.name }} - {{ plant.type }}
+      <router-link to="/buddy-detail/qU11BuBV9a8LBKlKYJiN">
+        {{ plant.name }} - {{ plant.type }}</router-link
+      >
     </li>
   </ul>
 </template>
@@ -29,7 +19,6 @@ export default defineComponent({
   setup() {
     const plantName = ref("");
     const {
-      add: addPlant,
       data: plants,
       getList: getPlantList,
       isLoading,
@@ -43,7 +32,6 @@ export default defineComponent({
     getPlantList();
 
     return {
-      addPlant,
       getPlantList,
       plantName,
       plants,

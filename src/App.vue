@@ -9,9 +9,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import AuthService from "@/services/AuthService";
+import { computed, defineComponent, ref } from "vue";
 import NavBar from "@/components/NavBar.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -19,15 +19,18 @@ export default defineComponent({
     NavBar,
   },
   setup() {
-    const isAuthorized = ref(false);
     const menuIsOpen = ref(false);
+    const route = useRoute();
 
-    isAuthorized.value = AuthService.isAuthorized();
+    const isAuthorized = computed(() => {
+      return !(
+        route.name === "Register" ||
+        route.name === "Login" ||
+        route.name === "Authenticate"
+      );
+    });
 
-    return {
-      isAuthorized,
-      menuIsOpen,
-    };
+    return { route, menuIsOpen, isAuthorized };
   },
   methods: {
     toggleMenu() {
