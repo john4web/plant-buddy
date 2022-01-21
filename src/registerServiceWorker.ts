@@ -3,12 +3,21 @@
 import { register } from 'register-service-worker';
 
 if (process.env.NODE_ENV === 'production') {
-    register(`${process.env.BASE_URL}service-worker.js`, {
+    register(`firebase-messaging-sw.js`, {
         ready() {
             console.log(
                 'App is being served from cache by a service worker.\n' +
                     'For more details, visit https://goo.gl/AFskqB'
             );
+
+            if ('Notification' in window)
+                Notification.requestPermission().then((perm) => {
+                    if (perm === 'granted') {
+                        console.log('permission giveeeen');
+                    } else {
+                        console.log('permission not given');
+                    }
+                });
         },
         registered() {
             console.log('Service worker has been registered.');
