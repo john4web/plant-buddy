@@ -20,8 +20,9 @@ export const useList = <T>(endpoint: Service<T>) => {
     const add = async (item: T, isRefetching = false) => {
         isLoading.value = true;
         try {
-            await endpoint.add(item);
+            const doc = await endpoint.add(item);
             if (isRefetching) await getList();
+            return doc;
         } catch (e) {
             error.value = true;
         }

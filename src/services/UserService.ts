@@ -25,6 +25,10 @@ class UserService implements Service<User> {
         return getDoc<User>(doc(this.usersCollection, id));
     };
 
+    getDocReference = (id: string) => {
+        return doc(this.usersCollection, id);
+    };
+
     getAll = () => {
         getDocs<User>(this.usersCollection).then((docs) => {
             docs.forEach((doc) => console.log(doc.id));

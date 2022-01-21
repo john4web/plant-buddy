@@ -117,6 +117,9 @@ import PlantService from '@/services/PlantService';
 import { defineComponent, ref } from 'vue';
 import OverlayLayout from '@/components/OverlayLayout.vue';
 import NotificationInput from '@/components/NotificationInput.vue';
+import NotificationService from '@/services/NotificationService';
+import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 
 export default defineComponent({
     name: 'NewBuddy',
@@ -147,13 +150,28 @@ export default defineComponent({
         };
 
         const addPlant = async () => {
-            await add({
+            const plantReference = await add({
                 id: '',
                 name: plantName.value,
                 type: plantType.value,
                 wateringAmount: wateringAmount.value,
                 fertilizingAmount: fertilizingAmount.value,
             });
+            const userUuid = await AuthService.getUserUuid();
+            const userReference = userUuid
+                ? await UserService.getDocReference(userUuid)
+                : null;
+            if (plantReference && userReference) {
+                wateringData.value.forEach((notification) => {
+                    NotificationService.add({
+                        name: 'TEST NOTIFICIATION',
+                        day: notification.day,
+                        time: notification.time,
+                        plantReference: plantReference,
+                        userReference: userReference,
+                    });
+                });
+            }
         };
 
         return {
