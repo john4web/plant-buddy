@@ -43,7 +43,7 @@ export default defineComponent({
         const route = useRoute();
         const router = useRouter();
         const id = String(route.params.id);
-        const plant = ref<Plant>({ name: '', type: '' });
+        const plant = ref<Plant>({ id: '', name: '', type: '' });
         const isEditMode = ref<boolean>(false);
 
         onMounted(async () => {

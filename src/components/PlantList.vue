@@ -1,10 +1,10 @@
 <template>
     <h2 class="font-bold">List of plants</h2>
     <ul>
-        <li v-for="(plant, index) in plants" :key="index">
-            <router-link to="/buddy-detail/qU11BuBV9a8LBKlKYJiN">
-                {{ plant.name }} - {{ plant.type }}</router-link
-            >
+        <li v-for="plant in plants" :key="plant.id">
+            <router-link :to="`/buddy-detail/${plant.id}`">
+                {{ plant.name }} - {{ plant.type }}
+            </router-link>
         </li>
     </ul>
 </template>
@@ -23,11 +23,6 @@ export default defineComponent({
             getList: getPlantList,
             isLoading,
         } = useList(PlantService);
-
-        // just a simple demonstration of retrieving a single document
-        PlantService.get('qU11BuBV9a8LBKlKYJiN').then((plant) => {
-            console.log(plant.data());
-        });
 
         getPlantList();
 
