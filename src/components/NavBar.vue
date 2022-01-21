@@ -123,13 +123,14 @@
                         >Settings</router-link
                     >
                 </li>
-                <li class="mb-2">
-                    <router-link
-                        @click="toggleMenu"
-                        to="/logout"
-                        class="inline-block underline"
-                        >Logout</router-link
-                    >
+                <li
+                    class="mb-2 inline-block underline cursor-pointer"
+                    @click="
+                        toggleMenu();
+                        logout();
+                    "
+                >
+                    Logout
                 </li>
             </ul>
         </div>
@@ -138,21 +139,31 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-
+import AuthService from '@/services/AuthService';
+import { useRouter } from 'vue-router';
 export default defineComponent({
     name: 'App',
     setup() {
         const menuIsOpen = ref(false);
+        const router = useRouter();
+
+        const logout = () => {
+            AuthService.logout();
+
+            router.push({ name: 'Authenticate' });
+        };
+
+        const toggleMenu = () => {
+            menuIsOpen.value = !menuIsOpen.value;
+        };
 
         return {
             menuIsOpen,
+            logout,
+            toggleMenu,
         };
     },
-    methods: {
-        toggleMenu() {
-            this.menuIsOpen = !this.menuIsOpen;
-        },
-    },
+    methods: {},
 });
 </script>
 
