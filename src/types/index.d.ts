@@ -14,6 +14,8 @@ export type Plant = {
     id: string;
     name: string;
     type: string;
+    wateringAmount: number;
+    fertilizingAmount: number;
 };
 
 export type User = {
@@ -23,6 +25,8 @@ export type User = {
 
 export type Notification = {
     name: string;
+    day: int;
+    time: string;
     plantReference: string;
     userReference: string;
 };

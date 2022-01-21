@@ -9,7 +9,7 @@
             </div>
             <div class="mt-5">
                 <label for="plantType" class="block">Plant Type</label>
-                <input v-model="plantType" class="input block" />
+                <input id="plantType" v-model="plantType" class="input block" />
             </div>
             <div class="p-4">UPLOAD A PHOTO HERE</div>
             <div>Watering</div>
@@ -51,26 +51,10 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
@@ -114,36 +98,15 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
 
-            <button
-                class="button"
-                @click="addPlant({ name: plantName, type: plantType }, true)"
-            >
-                Add plant
-            </button>
+            <button class="button" @click="addPlant">Add plant</button>
         </div>
     </OverlayLayout>
 </template>
@@ -159,7 +122,7 @@ export default defineComponent({
     name: 'NewBuddy',
     components: { OverlayLayout, NotificationInput },
     setup() {
-        const { add: addPlant } = useList(PlantService);
+        const { add } = useList(PlantService);
         const plantName = ref('');
         const plantType = ref('');
         const wateringData = ref([{ day: 1, time: '12:00' }]);
@@ -183,6 +146,16 @@ export default defineComponent({
             fertilizingData.value.splice(index, 1);
         };
 
+        const addPlant = async () => {
+            await add({
+                id: '',
+                name: plantName.value,
+                type: plantType.value,
+                wateringAmount: wateringAmount.value,
+                fertilizingAmount: fertilizingAmount.value,
+            });
+        };
+
         return {
             addPlant,
             plantName,
@@ -199,7 +172,6 @@ export default defineComponent({
     },
 });
 </script>
-
 
 <style scoped>
 .plus-button span {

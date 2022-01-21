@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="plant">
         <button @click="$router.back()">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@ export default defineComponent({
         const route = useRoute();
         const router = useRouter();
         const id = String(route.params.id);
-        const plant = ref<Plant>({ id: '', name: '', type: '' });
+        const plant = ref<Plant | null>(null);
         const isEditMode = ref<boolean>(false);
 
         onMounted(async () => {
