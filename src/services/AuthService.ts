@@ -8,6 +8,7 @@ import {
     setPersistence,
     browserSessionPersistence,
 } from 'firebase/auth';
+import UserService from '@/services/UserService';
 
 class AuthService {
     isAuthorized = () => {
@@ -20,13 +21,29 @@ class AuthService {
         });
     };
 
+    getUserUuid = async () => {
+        const auth = await getAuth(firebaseApp);
+        return auth?.currentUser?.uid;
+    };
+
     createUser = async (
         email: string,
         password: string
     ): Promise<UserCredential | null> => {
         const auth = getAuth(firebaseApp);
         try {
-            return await createUserWithEmailAndPassword(auth, email, password);
+            const userCredentials = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            if (userCredentials) {
+                await UserService.add({
+                    token: 'test',
+                    uuid: userCredentials.user.uid,
+                });
+            }
+            return userCredentials;
         } catch (e) {
             console.log('Sthg went wrong when creating a user.', e);
         }

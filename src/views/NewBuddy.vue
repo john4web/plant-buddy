@@ -9,7 +9,7 @@
             </div>
             <div class="mt-5">
                 <label for="plantType" class="block">Plant Type</label>
-                <input v-model="plantType" class="input block" />
+                <input id="plantType" v-model="plantType" class="input block" />
             </div>
             <div class="p-4">UPLOAD A PHOTO HERE</div>
             <div>Watering</div>
@@ -51,26 +51,10 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
@@ -114,36 +98,15 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
 
-            <button
-                class="button"
-                @click="addPlant({ name: plantName, type: plantType }, true)"
-            >
-                Add plant
-            </button>
+            <button class="button" @click="addPlant">Add plant</button>
         </div>
     </OverlayLayout>
 </template>
@@ -154,12 +117,15 @@ import PlantService from '@/services/PlantService';
 import { defineComponent, ref } from 'vue';
 import OverlayLayout from '@/components/OverlayLayout.vue';
 import NotificationInput from '@/components/NotificationInput.vue';
+import NotificationService from '@/services/NotificationService';
+import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 
 export default defineComponent({
     name: 'NewBuddy',
     components: { OverlayLayout, NotificationInput },
     setup() {
-        const { add: addPlant } = useList(PlantService);
+        const { add } = useList(PlantService);
         const plantName = ref('');
         const plantType = ref('');
         const wateringData = ref([{ day: 1, time: '12:00' }]);
@@ -183,6 +149,43 @@ export default defineComponent({
             fertilizingData.value.splice(index, 1);
         };
 
+        const addPlant = async () => {
+            const plantReference = await add({
+                id: '',
+                name: plantName.value,
+                type: plantType.value,
+                wateringAmount: wateringAmount.value,
+                fertilizingAmount: fertilizingAmount.value,
+            });
+            const userUuid = await AuthService.getUserUuid();
+            const userReference = userUuid
+                ? await UserService.getDocReference(userUuid)
+                : null;
+            if (plantReference && userReference) {
+                wateringData.value.forEach((notification) => {
+                    NotificationService.add({
+                        title: `${plantName.value} (${plantType.value}) is thirsty!`,
+                        body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
+                        day: notification.day,
+                        time: notification.time,
+                        plantReference: plantReference,
+                        userReference: userReference,
+                    });
+                });
+
+                fertilizingData.value.forEach((notification) => {
+                    NotificationService.add({
+                        title: `Fertilize ${plantName.value} (${plantType.value})!`,
+                        body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
+                        day: notification.day,
+                        time: notification.time,
+                        plantReference: plantReference,
+                        userReference: userReference,
+                    });
+                });
+            }
+        };
+
         return {
             addPlant,
             plantName,
@@ -199,7 +202,6 @@ export default defineComponent({
     },
 });
 </script>
-
 
 <style scoped>
 .plus-button span {

@@ -9,28 +9,37 @@ import {
 } from 'firebase/firestore';
 import { Plant, Service } from '@/types';
 
-const PLANT_COLLECTION = 'plants';
+import AuthService from '@/services/AuthService';
 
 const plantConverter = {
     toFirestore: (data: Plant) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as Plant,
+    fromFirestore: (snap: QueryDocumentSnapshot): Plant => ({
+        ...(snap.data() as Plant),
+        id: snap.id,
+    }),
 };
 
 class PlantService implements Service<Plant> {
-    plantsCollection = collection(db, PLANT_COLLECTION).withConverter(
-        plantConverter
-    );
-
-    get = (id: string) => {
-        return getDoc<Plant>(doc(this.plantsCollection, id));
+    getPlantsCollection = async () => {
+        const userUuid = await AuthService.getUserUuid();
+        return collection(db, `users/${userUuid}/plants`).withConverter(
+            plantConverter
+        );
     };
 
-    getAll = () => {
-        return getDocs<Plant>(this.plantsCollection);
+    get = async (id: string) => {
+        const plantsCollection = await this.getPlantsCollection();
+        return getDoc<Plant>(doc(plantsCollection, id));
     };
 
-    add = (item: Plant) => {
-        return addDoc<Plant>(this.plantsCollection, item);
+    getAll = async () => {
+        const plantsCollection = await this.getPlantsCollection();
+        return getDocs<Plant>(plantsCollection);
+    };
+
+    add = async (item: Plant) => {
+        const plantsCollection = await this.getPlantsCollection();
+        return addDoc<Plant>(plantsCollection, item);
     };
 }
 
