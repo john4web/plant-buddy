@@ -24,7 +24,8 @@ export type User = {
 };
 
 export type Notification = {
-    name: string;
+    title: string;
+    body: string;
     day: int;
     time: string;
     plantReference: DocumentReference<Plant>;

@@ -164,7 +164,19 @@ export default defineComponent({
             if (plantReference && userReference) {
                 wateringData.value.forEach((notification) => {
                     NotificationService.add({
-                        name: 'TEST NOTIFICIATION',
+                        title: `${plantName.value} (${plantType.value}) is thirsty!`,
+                        body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
+                        day: notification.day,
+                        time: notification.time,
+                        plantReference: plantReference,
+                        userReference: userReference,
+                    });
+                });
+
+                fertilizingData.value.forEach((notification) => {
+                    NotificationService.add({
+                        title: `Fertilize ${plantName.value} (${plantType.value})!`,
+                        body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
                         day: notification.day,
                         time: notification.time,
                         plantReference: plantReference,
