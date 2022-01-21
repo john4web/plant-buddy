@@ -11,30 +11,10 @@ var firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
-
-// different place
 const messaging = app.messaging();
-messaging
-    .getToken({
-        vapidKey:
-            'BPjg1ATlmZ8gvlgzNKdoNP3gD16Yq09MnYkPDpSh3to2CKU8zblyrKw5hWWWEIAtLPy0dX2kPW47jKY7owJO5Zs',
-    })
-    .then((token) => {
-        if (token) {
-            // send to BE
-            console.log(token);
-        } else {
-            console.log(
-                'sthg went wrong... u might not have the permission...'
-            );
-        }
-    });
 
 messaging.onBackgroundMessage((payload) => {
-    const notificationTitle = payload.data.title;
-    const notificationOptions = {
-        body: payload.data.title,
-    };
-
-    self.registration.showNotification(notificationTitle, notificationOptions);
+    self.registration.showNotification(payload.data.title, {
+        body: payload.data.body,
+    });
 });

@@ -21,6 +21,10 @@ class AuthService {
         });
     };
 
+    getAuth = () => {
+        return getAuth(firebaseApp);
+    };
+
     getUserUuid = async () => {
         const auth = await getAuth(firebaseApp);
         return auth?.currentUser?.uid;
