@@ -14,34 +14,39 @@
             <div class="p-4">UPLOAD A PHOTO HERE</div>
             <div>Watering</div>
 
-            <div class="flex flex-col space-y-2 p-2 w-80">
-                <label for="waterslider">Amount</label>
-                <input
-                    id="waterslider"
-                    type="range"
-                    class="w-full"
-                    min="1"
-                    max="5"
-                    step="1"
-                    v-model="wateringAmount"
-                />
-                <ul class="flex justify-between w-full px-[10px]">
-                    <li class="flex justify-center relative">
-                        <span class="absolute">low</span>
-                    </li>
-                    <li class="flex justify-center relative">
-                        <span class="absolute">high</span>
-                    </li>
-                </ul>
-            </div>
+            <label for="waterslider">Amount</label>
+            <input
+                id="waterslider"
+                type="range"
+                class="w-full"
+                min="1"
+                max="5"
+                step="1"
+                v-model="wateringAmount"
+            />
 
-            <div v-for="(_, index) in wateringData" :key="index">
+            <div
+                v-for="(_, index) in wateringData"
+                :key="index"
+                class="border-2 mb-5 p-5 relative"
+            >
                 <NotificationInput v-model="wateringData[index]" />
                 <button
                     @click="deleteWateringNotification(index)"
                     v-if="index !== 0"
+                    class="absolute -top-2 -right-2"
                 >
-                    X
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#0B486B"
+                    >
+                        <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                        />
+                    </svg>
                 </button>
             </div>
 
@@ -51,44 +56,65 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                        class="
+                            block
+                            absolute
+                            w-5
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-2
+                        "
                     ></span>
                     <span
-                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                        class="
+                            block
+                            absolute
+                            w-8
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-5
+                        "
                     ></span>
                 </div>
             </button>
 
             <div>Fertilizing</div>
 
-            <div class="flex flex-col space-y-2 p-2 w-80">
-                <label for="fertilizeslider">Amount</label>
-                <input
-                    id="fertilizeslider"
-                    type="range"
-                    class="w-full"
-                    min="1"
-                    max="5"
-                    step="1"
-                    v-model="fertilizingAmount"
-                />
-                <ul class="flex justify-between w-full px-[10px]">
-                    <li class="flex justify-center relative">
-                        <span class="absolute">low</span>
-                    </li>
-                    <li class="flex justify-center relative">
-                        <span class="absolute">high</span>
-                    </li>
-                </ul>
-            </div>
+            <label for="fertilizeslider">Amount</label>
+            <input
+                id="fertilizeslider"
+                type="range"
+                class="w-full"
+                min="1"
+                max="5"
+                step="1"
+                v-model="fertilizingAmount"
+            />
 
-            <div v-for="(_, index) in fertilizingData" :key="index">
+            <div
+                v-for="(_, index) in fertilizingData"
+                :key="index"
+                class="border-2 mb-5 p-5 relative"
+            >
                 <NotificationInput v-model="fertilizingData[index]" />
                 <button
                     @click="deleteFertilizingNotification(index)"
                     v-if="index !== 0"
+                    class="absolute -top-2 -right-2"
                 >
-                    X
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#3B8686"
+                    >
+                        <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                        />
+                    </svg>
                 </button>
             </div>
 
@@ -98,10 +124,26 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                        class="
+                            block
+                            absolute
+                            w-5
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-2
+                        "
                     ></span>
                     <span
-                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                        class="
+                            block
+                            absolute
+                            w-8
+                            h-1
+                            bg-white
+                            rounded-full
+                            top-5
+                        "
                     ></span>
                 </div>
             </button>
@@ -216,5 +258,89 @@ export default defineComponent({
 .plus-button {
     border: 0;
     border-radius: 50%;
+}
+
+input[type='range'] {
+    height: 34px;
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 11px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: #0b486b;
+    border-radius: 6px;
+    border: 0px solid #010101;
+}
+
+input[type='range']#fertilizeslider::-webkit-slider-runnable-track {
+    background: #3b8686;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000031;
+    border: 1px solid #00001e;
+    height: 26px;
+    width: 26px;
+    border-radius: 15px;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+}
+
+input[type='range']::-moz-range-track {
+    width: 100%;
+    height: 11px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 1px 1px 1px #000000;
+    background: #74a9d8;
+    border-radius: 1px;
+    border: 0px solid #010101;
+}
+input[type='range']::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000031;
+    border: 1px solid #00001e;
+    height: 26px;
+    width: 26px;
+    border-radius: 15px;
+    background: #ffffff;
+    cursor: pointer;
+}
+input[type='range']::-ms-track {
+    width: 100%;
+    height: 11px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+input[type='range']::-ms-fill-lower {
+    background: #74a9d8;
+    border: 0px solid #010101;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #000000;
+}
+input[type='range']::-ms-fill-upper {
+    background: #74a9d8;
+    border: 0px solid #010101;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #000000;
+}
+input[type='range']::-ms-thumb {
+    margin-top: 1px;
+    box-shadow: 1px 1px 1px #000031;
+    border: 1px solid #00001e;
+    height: 26px;
+    width: 26px;
+    border-radius: 15px;
+    background: #ffffff;
+    cursor: pointer;
 }
 </style>

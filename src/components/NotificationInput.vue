@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="flex justify-around">
         <div>
             <select
+                class="bg-grey p-2 rounded-lg"
                 :value="modelValue.day"
                 @input="
                     $emit('update:modelValue', {
@@ -21,6 +22,7 @@
         </div>
         <div>
             <input
+                class="bg-grey p-2 rounded-lg"
                 type="time"
                 :value="modelValue.time"
                 @input="
