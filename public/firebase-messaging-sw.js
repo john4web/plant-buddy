@@ -1,3 +1,12 @@
+self.addEventListener('fetch', function (event) {
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            return new Response(`Welcome to plant buddy!\n
+                You seem to be offline - check your connection!`);
+        })
+    );
+});
+
 importScripts('https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.2.7/firebase-messaging.js');
 
