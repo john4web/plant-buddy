@@ -1,21 +1,48 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker';
+import { getToken, onMessage } from 'firebase/messaging';
+import { firestore, messaging } from '@/services/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
+import AuthService from '@/services/AuthService';
 
 if (process.env.NODE_ENV === 'production') {
     register(`firebase-messaging-sw.js`, {
-        ready() {
-            console.log(
-                'App is being served from cache by a service worker.\n' +
-                    'For more details, visit https://goo.gl/AFskqB'
-            );
-
+        ready(registration) {
             if ('Notification' in window)
-                Notification.requestPermission().then((perm) => {
+                Notification.requestPermission().then(async (perm) => {
                     if (perm === 'granted') {
-                        console.log('permission giveeeen');
+                        const auth = AuthService.getAuth();
+                        auth.onAuthStateChanged((user) => {
+                            if (user?.uid) {
+                                getToken(messaging, {
+                                    vapidKey:
+                                        'BPjg1ATlmZ8gvlgzNKdoNP3gD16Yq09MnYkPDpSh3to2CKU8zblyrKw5hWWWEIAtLPy0dX2kPW47jKY7owJO5Zs',
+                                }).then((token) => {
+                                    if (token) {
+                                        console.log(user.uid);
+                                        const userRef = doc(
+                                            firestore,
+                                            'users',
+                                            user.uid
+                                        );
+                                        updateDoc(userRef, { token: token });
+                                    }
+                                });
+
+                                onMessage(messaging, (payload) => {
+                                    if (payload.data?.title)
+                                        registration.showNotification(
+                                            payload?.data?.title,
+                                            {
+                                                body: payload.data?.body,
+                                            }
+                                        );
+                                });
+                            }
+                        });
                     } else {
-                        console.log('permission not given');
+                        console.log('permission not given :(');
                     }
                 });
         },
