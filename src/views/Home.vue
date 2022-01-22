@@ -1,12 +1,12 @@
 <template>
     <DefaultLayout>
-        <section>
+        <section class="flex flex-col">
             <h1>Hi, plant buddy!</h1>
             <p>
                 We're glad you chose to take care of your green little friends.
             </p>
         </section>
-        <section class="flex flex-col gap-2">
+        <section class="flex flex-col gap-3">
             <h2>
                 Your Garden
                 <span class="badge"> {{ plants ? plants.length : 0 }} </span>
@@ -21,12 +21,12 @@
                         :key="plant.id"
                     />
                 </ul>
-                <router-link to="/my-garden" class="underline font-bold"
+                <router-link to="/my-garden" class="link"
                     >See all plants</router-link
                 >
             </template>
         </section>
-        <section class="flex flex-col gap-2">
+        <section class="flex flex-col gap-3">
             <h2>
                 Today's tasks
                 <span class="badge">

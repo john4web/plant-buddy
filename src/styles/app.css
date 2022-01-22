@@ -31,6 +31,12 @@
     form {
         @apply flex flex-col;
     }
+
+    .link {
+        @apply underline font-bold;
+        color: var(--blue);
+    }
+
     .button {
         @apply bg-grey rounded-3xl p-4;
     }

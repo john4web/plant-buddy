@@ -33,4 +33,5 @@ export type Notification = {
     time: string;
     type: string;
     userReference: DocumentReference<User>;
+    plantReference: DocumentReference<User>;
 };
