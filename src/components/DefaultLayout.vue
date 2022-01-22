@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="flex flex-col gap-5 p-5">
         <NavBar />
         <slot />
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 
 export default defineComponent({

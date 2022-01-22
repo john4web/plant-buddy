@@ -1,14 +1,14 @@
 <template>
     <OverlayLayout>
-        <div class="text-navy p-6">
+        <div class="flex flex-col gap-5">
             <h1>New Buddy</h1>
             <div>Add a plant to your collection.</div>
-            <div class="mt-10 flex-col">
-                <label for="plantName" class="block">Name</label>
+            <div>
+                <label for="plantName">Name</label>
                 <input id="plantName" v-model="plantName" class="input block" />
             </div>
-            <div class="mt-5">
-                <label for="plantType" class="block">Plant Type</label>
+            <div>
+                <label for="plantType">Plant Type</label>
                 <input id="plantType" v-model="plantType" class="input block" />
             </div>
             <button @click="cameraIsOpen = true" class="button">
@@ -79,130 +79,100 @@
                 v-model="wateringAmount"
             />
 
-            <div
-                v-for="(_, index) in wateringData"
-                :key="index"
-                class="border-2 mb-5 p-5 relative"
-            >
-                <NotificationInput v-model="wateringData[index]" />
-                <button
-                    @click="deleteWateringNotification(index)"
-                    v-if="index !== 0"
-                    class="absolute -top-2 -right-2"
+                <div
+                    v-for="(_, index) in wateringData"
+                    :key="index"
+                    class="border-2 mb-5 p-5 relative"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="#0B486B"
+                    <NotificationInput v-model="wateringData[index]" />
+                    <button
+                        @click="deleteWateringNotification(index)"
+                        v-if="index !== 0"
+                        class="absolute -top-2 -right-2"
                     >
-                        <path
-                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                        />
-                    </svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="#0B486B"
+                        >
+                            <path
+                                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <button
+                    class="p-2 rounded-full bg-navy"
+                    @click="addNewWaterNotification"
+                >
+                    <div class="h-8 w-8 relative plus-button">
+                        <span
+                            class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                        ></span>
+                        <span
+                            class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                        ></span>
+                    </div>
                 </button>
             </div>
 
-            <button
-                class="p-2 rounded-full bg-navy"
-                @click="addNewWaterNotification"
-            >
-                <div class="h-8 w-8 relative plus-button">
-                    <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
-                    ></span>
-                    <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
-                    ></span>
-                </div>
-            </button>
+            <div>
+                <h3>Fertilizing</h3>
 
-            <div>Fertilizing</div>
-
-            <label for="fertilizeslider">Amount</label>
-            <input
-                id="fertilizeslider"
-                type="range"
-                class="w-full"
-                min="1"
-                max="5"
-                step="1"
-                v-model="fertilizingAmount"
-            />
-
-            <div
-                v-for="(_, index) in fertilizingData"
-                :key="index"
-                class="border-2 mb-5 p-5 relative"
-            >
-                <NotificationInput v-model="fertilizingData[index]" />
-                <button
-                    @click="deleteFertilizingNotification(index)"
-                    v-if="index !== 0"
-                    class="absolute -top-2 -right-2"
+                <label for="fertilizeslider">Amount</label>
+                <input
+                    id="fertilizeslider"
+                    type="range"
+                    class="w-full"
+                    min="1"
+                    max="5"
+                    step="1"
+                    v-model="fertilizingAmount"
+                />
+                <div
+                    v-for="(_, index) in fertilizingData"
+                    :key="index"
+                    class="border-2 mb-5 p-5 relative"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="#3B8686"
+                    <NotificationInput v-model="fertilizingData[index]" />
+                    <button
+                        @click="deleteFertilizingNotification(index)"
+                        v-if="index !== 0"
+                        class="absolute -top-2 -right-2"
                     >
-                        <path
-                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                        />
-                    </svg>
-                </button>
-            </div>
-
-            <button
-                class="p-2 rounded-full bg-drakgreen"
-                @click="addNewFertilizingNotification"
-            >
-                <div class="h-8 w-8 relative plus-button">
-                    <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
-                    ></span>
-                    <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
-                    ></span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="#3B8686"
+                        >
+                            <path
+                                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                            />
+                        </svg>
+                    </button>
                 </div>
-            </button>
 
-            <button class="button" @click="addPlant">Add plant</button>
+                <button
+                    class="p-2 rounded-full bg-drakgreen"
+                    @click="addNewFertilizingNotification"
+                >
+                    <div class="h-8 w-8 relative plus-button">
+                        <span
+                            class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                        ></span>
+                        <span
+                            class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                        ></span>
+                    </div>
+                </button>
+
+                <button class="button" @click="addPlant">Add plant</button>
+            </div>
         </div>
     </OverlayLayout>
 </template>
@@ -220,6 +190,7 @@ import Camera from 'simple-vue-camera';
 import { storage } from '@/services/firebase';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import router from '@/router';
 
 export default defineComponent({
     name: 'NewBuddy',
@@ -261,6 +232,7 @@ export default defineComponent({
             if (image.value)
                 imageReference = await saveBlobToFirestore(image.value);
 
+            try {
             const plantReference = await add({
                 id: '',
                 name: plantName.value,
@@ -279,22 +251,28 @@ export default defineComponent({
                         title: `${plantName.value} (${plantType.value}) is thirsty!`,
                         body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
                         day: notification.day,
+                        type: 'water',
                         time: notification.time,
                         plantReference: plantReference,
                         userReference: userReference,
                     });
                 });
 
-                fertilizingData.value.forEach((notification) => {
-                    NotificationService.add({
-                        title: `Fertilize ${plantName.value} (${plantType.value})!`,
-                        body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
-                        day: notification.day,
-                        time: notification.time,
-                        plantReference: plantReference,
-                        userReference: userReference,
+                    fertilizingData.value.forEach((notification) => {
+                        NotificationService.add({
+                            title: `Fertilize ${plantName.value} (${plantType.value})!`,
+                            body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
+                            type: 'fertilize',
+                            day: notification.day,
+                            time: notification.time,
+                            plantReference: plantReference,
+                            userReference: userReference,
+                        });
                     });
-                });
+                }
+                await router.push('/my-garden');
+            } catch (e) {
+                console.log('sth went wrong', e);
             }
         };
 

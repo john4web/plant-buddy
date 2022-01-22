@@ -5,9 +5,13 @@ import {
     doc,
     getDoc,
     getDocs,
+    query,
+    where,
     QueryDocumentSnapshot,
 } from 'firebase/firestore';
 import { Notification, Service } from '@/types';
+import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 
 const notificationConverter = {
     toFirestore: (data: Notification) => data,
@@ -23,7 +27,18 @@ class NotificationService implements Service<Notification> {
     };
 
     getAll = async () => {
-        return getDocs<Notification>(this.notificationsCollection);
+        const userUuid = await AuthService.getUserUuid();
+        const userReference = userUuid
+            ? await UserService.getDocReference(userUuid)
+            : null;
+        const currentDay = new Date().getDay();
+        const q = query(
+            this.notificationsCollection,
+            where('userReference', '==', userReference),
+            where('day', '==', currentDay.toString())
+        );
+
+        return getDocs<Notification>(q);
     };
 
     add = async (notification: Notification) => {
