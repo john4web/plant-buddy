@@ -2,7 +2,9 @@ import {
     DocumentReference,
     DocumentSnapshot,
     QuerySnapshot,
+    Blob
 } from 'firebase/firestore';
+import { StorageReference } from 'firebase/storage';
 
 export interface Service<T> {
     add(item: T): Promise<DocumentReference<T> | void>;
@@ -16,6 +18,7 @@ export type Plant = {
     type: string;
     wateringAmount: number;
     fertilizingAmount: number;
+    image: StorageReference | null;
 };
 
 export type User = {

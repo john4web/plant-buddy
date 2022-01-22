@@ -12,6 +12,15 @@
                 <input id="plantType" v-model="plantType" class="input block" />
             </div>
             <div class="p-4">UPLOAD A PHOTO HERE</div>
+            <div>
+                <camera
+                    :resolution="{ width: 375, height: 812 }"
+                    ref="camera"
+                    autoplay
+                    ><button @click="snapshot">Create snapshot</button></camera
+                >
+                <img :src="imageSrc" alt="" />
+            </div>
             <div>Watering</div>
 
             <label for="waterslider">Amount</label>
@@ -156,16 +165,21 @@
 <script lang="ts">
 import { useList } from '@/composables/resource-list';
 import PlantService from '@/services/PlantService';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import OverlayLayout from '@/components/OverlayLayout.vue';
 import NotificationInput from '@/components/NotificationInput.vue';
 import NotificationService from '@/services/NotificationService';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
+import Camera from 'simple-vue-camera';
+import { storage } from '@/services/firebase';
+import { ref as storageRef, uploadBytes } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 export default defineComponent({
     name: 'NewBuddy',
-    components: { OverlayLayout, NotificationInput },
+    components: { OverlayLayout, NotificationInput, Camera },
+
     setup() {
         const { add } = useList(PlantService);
         const plantName = ref('');
@@ -174,6 +188,11 @@ export default defineComponent({
         const fertilizingData = ref([{ day: 1, time: '12:00' }]);
         const wateringAmount = ref(3);
         const fertilizingAmount = ref(3);
+        const image = ref<Blob | null>(null);
+
+        const imageSrc = computed(() => {
+            return image.value && URL.createObjectURL(image.value);
+        });
 
         const addNewWaterNotification = () => {
             wateringData.value.push({ day: 1, time: '12:00' });
@@ -192,12 +211,17 @@ export default defineComponent({
         };
 
         const addPlant = async () => {
+            let imageReference = null;
+            if (image.value)
+                imageReference = await saveBlobToFirestore(image.value);
+
             const plantReference = await add({
                 id: '',
                 name: plantName.value,
                 type: plantType.value,
                 wateringAmount: wateringAmount.value,
                 fertilizingAmount: fertilizingAmount.value,
+                image: imageReference,
             });
             const userUuid = await AuthService.getUserUuid();
             const userReference = userUuid
@@ -228,6 +252,26 @@ export default defineComponent({
             }
         };
 
+        const camera = ref<InstanceType<typeof Camera>>();
+
+        const snapshot = async () => {
+            const blob = await camera.value?.snapshot({
+                width: 375,
+                height: 812,
+            });
+            if (blob) image.value = blob;
+        };
+
+        const saveBlobToFirestore = async (blob: Blob) => {
+            console.log('storing blob');
+            const storageReference = storageRef(storage, uuidv4());
+
+            // 'file' comes from the Blob or File API
+            await uploadBytes(storageReference, blob);
+
+            return storageReference;
+        };
+
         return {
             addPlant,
             plantName,
@@ -240,6 +284,10 @@ export default defineComponent({
             deleteFertilizingNotification,
             wateringAmount,
             fertilizingAmount,
+            image,
+            snapshot,
+            camera,
+            imageSrc,
         };
     },
 });
