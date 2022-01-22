@@ -11,7 +11,24 @@
                 <label for="plantType" class="block">Plant Type</label>
                 <input id="plantType" v-model="plantType" class="input block" />
             </div>
-            <div class="p-4">UPLOAD A PHOTO HERE</div>
+            <div class="p-4">
+                <Camera
+                    :resolution="{ width: 375, height: 812 }"
+                    ref="camera"
+                    autoplay
+                ></Camera>
+                <button @click="snapshot">Create snapshot</button>
+
+                <!-- <Camera
+                    v-if="cameraIsOpen"
+                    @closeCamera="onCloseCamera"
+                    @takePicture="onTakePicture"
+                />
+                <button @click="cameraIsOpen = true" v-else class="button">
+                    Open Camera
+                </button> -->
+            </div>
+            <canvas class="w-full hidden"></canvas>
             <div>Watering</div>
 
             <label for="waterslider">Amount</label>
@@ -158,14 +175,16 @@ import { useList } from '@/composables/resource-list';
 import PlantService from '@/services/PlantService';
 import { defineComponent, ref } from 'vue';
 import OverlayLayout from '@/components/OverlayLayout.vue';
+//import Camera from '@/components/Camera.vue';
 import NotificationInput from '@/components/NotificationInput.vue';
 import NotificationService from '@/services/NotificationService';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
+import Camera from 'simple-vue-camera';
 
 export default defineComponent({
     name: 'NewBuddy',
-    components: { OverlayLayout, NotificationInput },
+    components: { OverlayLayout, NotificationInput, Camera },
     setup() {
         const { add } = useList(PlantService);
         const plantName = ref('');
@@ -174,6 +193,57 @@ export default defineComponent({
         const fertilizingData = ref([{ day: 1, time: '12:00' }]);
         const wateringAmount = ref(3);
         const fertilizingAmount = ref(3);
+        const cameraIsOpen = ref(false);
+        const pictureData = ref('');
+
+        // Get a reference of the component
+        const camera = ref<InstanceType<typeof Camera>>();
+        // const devices: any = camera.value?.devices(['videoinput']);
+        // const device = devices[0];
+        // camera.value?.changeCamera(device.deviceId);
+        // Use camera reference to call functions
+        const snapshot = async () => {
+            const blob = await camera.value?.snapshot();
+
+            // To show the screenshot with an image tag, create a url
+            const url = URL.createObjectURL(blob);
+        };
+
+        const onCloseCamera = () => {
+            cameraIsOpen.value = false;
+        };
+
+        const onTakePicture = () => {
+            onCloseCamera();
+
+            // Get a Blob from the currently selected camera source and
+            // display this with an img element.
+            //const imageCapture = new ImageCapture(stream.getVideoTracks()[0]);
+            // imageCapture
+            //     .takePhoto()
+            //     .then(function (blob) {
+            //         console.log('Took photo:', blob);
+            //         img.classList.remove('hidden');
+            //         img.src = URL.createObjectURL(blob);
+            //     })
+            //     .catch(function (error) {
+            //         console.log('takePhoto() error: ', error);
+            //     });
+
+            const picture: any = document.querySelector('canvas');
+            picture.style.display = 'block';
+            const ctx: any = picture.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(
+                document.querySelector('video'),
+                0,
+                0,
+                picture.width,
+                picture.height
+            );
+            pictureData.value = picture.toDataURL();
+        };
 
         const addNewWaterNotification = () => {
             wateringData.value.push({ day: 1, time: '12:00' });
@@ -240,6 +310,12 @@ export default defineComponent({
             deleteFertilizingNotification,
             wateringAmount,
             fertilizingAmount,
+            onCloseCamera,
+            cameraIsOpen,
+            onTakePicture,
+            pictureData,
+            camera,
+            snapshot,
         };
     },
 });
