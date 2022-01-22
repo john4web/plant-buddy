@@ -1,20 +1,25 @@
 <template>
     <OverlayLayout>
-        <div class="flex flex-col gap-5">
-            <h1>New Buddy</h1>
-            <div>Add a plant to your collection.</div>
-            <div>
-                <label for="plantName">Name</label>
-                <input id="plantName" v-model="plantName" class="input block" />
-            </div>
-            <div>
-                <label for="plantType">Plant Type</label>
-                <input id="plantType" v-model="plantType" class="input block" />
-            </div>
+        <h1>New Buddy</h1>
+        <div class="form-element">
+            <label for="plantName">Name</label>
+            <input id="plantName" v-model="plantName" class="" />
+        </div>
+        <div class="form-element">
+            <label for="plantType">Plant Type</label>
+            <input id="plantType" v-model="plantType" class="" />
+        </div>
+        <div class="form-element">
+            <h3 for="camera">Take a nice shot!</h3>
+            <p>
+                The picture will be useful for identifying every plant in your
+                garden.
+            </p>
             <button @click="cameraIsOpen = true" class="button">
                 Open Camera
             </button>
             <div
+                id="camera"
                 class="bg-black fixed w-screen h-screen left-0 top-0 z-10"
                 v-if="cameraIsOpen"
             >
@@ -48,11 +53,12 @@
                     </div>
                 </camera>
             </div>
+        </div>
 
-            <img :src="imageSrc" alt="" v-show="image" />
+        <img :src="imageSrc" alt="" v-show="image" />
 
-            <div>Watering</div>
-
+        <div class="form-element">
+            <h2>Watering</h2>
             <label for="waterslider">Amount</label>
             <input
                 id="waterslider"
@@ -63,12 +69,14 @@
                 step="1"
                 v-model="wateringAmount"
             />
-
+            <h3>Reminder</h3>
+            <p>When do you want to be reminded to water your plant?</p>
             <div
                 v-for="(_, index) in wateringData"
                 :key="index"
                 class="border-2 mb-5 p-5 relative"
             >
+                <span class="badge">{{ index + 1 }}</span>
                 <NotificationInput v-model="wateringData[index]" />
                 <button
                     @click="deleteWateringNotification(index)"
@@ -103,10 +111,8 @@
                 </div>
             </button>
         </div>
-
-        <div>
-            <h3>Fertilizing</h3>
-
+        <div class="form-element">
+            <h2>Fertilizing</h2>
             <label for="fertilizeslider">Amount</label>
             <input
                 id="fertilizeslider"
@@ -117,11 +123,9 @@
                 step="1"
                 v-model="fertilizingAmount"
             />
-            <div
-                v-for="(_, index) in fertilizingData"
-                :key="index"
-                class="border-2 mb-5 p-5 relative"
-            >
+            <h3>Reminder</h3>
+            <p>When should we remind you to fertilize your plant?</p>
+            <div v-for="(_, index) in fertilizingData" :key="index">
                 <NotificationInput v-model="fertilizingData[index]" />
                 <button
                     @click="deleteFertilizingNotification(index)"
@@ -155,9 +159,9 @@
                     ></span>
                 </div>
             </button>
-
-            <button class="button" @click="addPlant">Add plant</button>
         </div>
+
+        <button class="button button--blue" @click="addPlant">Add plant</button>
     </OverlayLayout>
 </template>
 

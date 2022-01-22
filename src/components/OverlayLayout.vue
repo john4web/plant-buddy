@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5nod">
+    <div class="p-5 flex flex-col gap-5">
         <div class="flex justify-end items-center">
             <button class="outline-none" @click="$router.back()">
                 <div class="h-8 w-8 relative close-button">

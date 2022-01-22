@@ -13,6 +13,22 @@
             </h2>
 
             <template v-if="isLoadingPlants"> ... loading </template>
+            <div
+                v-else-if="plants.length === 0"
+                class="flex flex-col items-center text-center py-10 gap-3 bg-grey rounded-3xl"
+            >
+                <img
+                    src="../assets/plant-icon.png"
+                    alt="plant icon"
+                    class="w-[20vw] opacity-30"
+                />
+                <h3>No plants yet?</h3>
+                <router-link
+                    to="/new-buddy"
+                    class="button button--blue w-[50vw]"
+                    >Add a buddy</router-link
+                >
+            </div>
             <template v-else>
                 <ul class="grid grid-cols-2 gap-4">
                     <plant-card

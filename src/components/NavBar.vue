@@ -44,7 +44,7 @@
         <!-- mobile menu -->
         <div
             :class="{ hidden: !menuIsOpen }"
-            class="w-screen h-[calc(100vh-4rem)] fixed text-navy bg-white px-6 text-xl flex flex-col justify-between transition-all ease-in-out duration-200"
+            class="w-screen h-[calc(100vh-5rem)] z-20 fixed text-navy bg-white text-xl flex flex-col justify-between transition-all ease-in-out duration-200"
         >
             <ul class="mt-6">
                 <li>
