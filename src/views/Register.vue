@@ -10,7 +10,7 @@
 
             <p>Sign up to get this plant party started.</p>
         </div>
-        <form class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
             <div class="form-element">
                 <label for="email">E-Mail</label>
                 <input v-model="email" id="email" type="email" />
@@ -27,7 +27,7 @@
                 <router-link class="underline" to="/login">Log in</router-link>
                 instead.
             </p>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -55,6 +55,7 @@ export default defineComponent({
                     password.value
                 );
 
+                console.log('here', userCredentials);
                 userCredentials
                     ? await router.push({ name: 'Home' })
                     : console.log('shit stg went wrong with registration'); // TODO: show snackbar or other error
