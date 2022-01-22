@@ -11,16 +11,61 @@
                 <label for="plantType" class="block">Plant Type</label>
                 <input id="plantType" v-model="plantType" class="input block" />
             </div>
-            <div class="p-4">UPLOAD A PHOTO HERE</div>
-            <div>
+            <button @click="cameraIsOpen = true" class="button">
+                Open Camera
+            </button>
+            <div
+                class="bg-black fixed w-screen h-screen left-0 top-0 z-10"
+                v-if="cameraIsOpen"
+            >
                 <camera
                     :resolution="{ width: 375, height: 812 }"
                     ref="camera"
                     autoplay
-                    ><button @click="snapshot">Create snapshot</button></camera
                 >
-                <img :src="imageSrc" alt="" />
+                    <div class="w-full h-full flex justify-center items-end">
+                        <button
+                            @click="
+                                snapshot();
+                                cameraIsOpen = false;
+                            "
+                            class="bg-white rounded-full w-16 h-16 mb-10"
+                        ></button>
+
+                        <button
+                            @click="cameraIsOpen = false"
+                            class="absolute top-5 left-5"
+                        >
+                            <div class="h-8 w-8 relative close-button">
+                                <span
+                                    class="
+                                        block
+                                        absolute
+                                        w-5
+                                        h-1
+                                        bg-navy
+                                        rounded-full
+                                        top-2
+                                    "
+                                ></span>
+                                <span
+                                    class="
+                                        block
+                                        absolute
+                                        w-8
+                                        h-1
+                                        bg-navy
+                                        rounded-full
+                                        top-5
+                                    "
+                                ></span>
+                            </div>
+                        </button>
+                    </div>
+                </camera>
             </div>
+
+            <img :src="imageSrc" alt="" v-show="image" />
             <div>Watering</div>
 
             <label for="waterslider">Amount</label>
@@ -189,6 +234,7 @@ export default defineComponent({
         const wateringAmount = ref(3);
         const fertilizingAmount = ref(3);
         const image = ref<Blob | null>(null);
+        const cameraIsOpen = ref(false);
 
         const imageSrc = computed(() => {
             return image.value && URL.createObjectURL(image.value);
@@ -288,6 +334,7 @@ export default defineComponent({
             snapshot,
             camera,
             imageSrc,
+            cameraIsOpen,
         };
     },
 });
@@ -390,5 +437,24 @@ input[type='range']::-ms-thumb {
     border-radius: 15px;
     background: #ffffff;
     cursor: pointer;
+}
+
+.close-button span {
+    width: 2rem;
+    top: 0.875rem;
+}
+
+.close-button span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.close-button span:nth-child(2) {
+    transform: rotate(-45deg);
+}
+
+.close-button {
+    background-color: #e8e8e8;
+    outline: 8px solid #e8e8e8;
+    border-radius: 50%;
 }
 </style>
