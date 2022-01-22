@@ -1,32 +1,26 @@
 <template>
-    <div v-if="plant">
-        <button @click="$router.back()">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
-                />
-            </svg>
-        </button>
-        <h1>This is the BuddyDetail page</h1>
-        <button>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"
-                />
-            </svg>
-        </button>
-        <div>{{ plant.name }}</div>
-        <div>{{ plant.type }}</div>
+    <div v-if="plant" class="flex flex-col gap-5">
+        <back-button class="m-5" />
+        <div class="bg-green-300 w-full h-2/6 absolute top-0 left-0 z-0" />
+        <div
+            class="flex flex-col gap-3 bg-white z-10 mt-40 p-5 pt-8 rounded-3xl"
+        >
+            <section>
+                <h1>{{ plant.name }}</h1>
+                <div>{{ plant.type }}</div>
+            </section>
+            <section>
+                <h2>Watering</h2>
+                <div class="card">Amount: {{ plant.wateringAmount }}</div>
+                Next time to water Julia: ...
+            </section>
+
+            <section>
+                <h2>Fertilizing</h2>
+                <div class="card">Amount: {{ plant.wateringAmount }}</div>
+                Next time to fertilize Julia: ...
+            </section>
+        </div>
     </div>
 </template>
 
@@ -36,15 +30,19 @@ import { Plant } from '@/types';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
+import BackButton from '@/components/BackButton.vue';
+import { useList } from '@/composables/resource-list';
+import NotificationService from '@/services/NotificationService';
 
 export default defineComponent({
     name: 'BuddyDetail',
+    components: { BackButton },
     setup() {
         const route = useRoute();
         const router = useRouter();
         const id = String(route.params.id);
         const plant = ref<Plant | null>(null);
-        const isEditMode = ref<boolean>(false);
+        const { data: notifications } = useList(NotificationService);
 
         onMounted(async () => {
             const result: Plant | undefined = (
@@ -59,7 +57,7 @@ export default defineComponent({
 
         return {
             plant,
-            isEditMode,
+            notifications,
         };
     },
 });

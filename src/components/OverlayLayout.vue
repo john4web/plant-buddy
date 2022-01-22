@@ -1,29 +1,13 @@
 <template>
-    <div>
-        <div class="flex justify-end items-center py-4 px-4">
+    <div class="p-5nod">
+        <div class="flex justify-end items-center">
             <button class="outline-none" @click="$router.back()">
                 <div class="h-8 w-8 relative close-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-navy
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-navy rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-navy
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-navy rounded-full top-5"
                     ></span>
                 </div>
             </button>
@@ -34,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'OverlayLayout',

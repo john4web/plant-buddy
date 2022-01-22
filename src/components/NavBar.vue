@@ -1,6 +1,6 @@
 <template>
     <nav class="bg-white">
-        <div class="max-w-6xl mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
             <div class="flex justify-start md:justify-center">
                 <div class="flex space-x-7">
                     <!-- Desktop Navbar items -->
@@ -27,43 +27,14 @@
                 <div class="md:hidden flex items-center py-4 px-2">
                     <button class="outline-none" @click="toggleMenu">
                         <div
-                            class="
-                                h-8
-                                w-8
-                                relative
-                                transition-all
-                                ease-in-out
-                                duration-200
-                            "
+                            class="h-8 w-8 relative transition-all ease-in-out duration-200"
                             :class="{ 'menu__button--open': menuIsOpen }"
                         >
                             <span
-                                class="
-                                    block
-                                    absolute
-                                    w-5
-                                    h-1
-                                    bg-navy
-                                    rounded-full
-                                    top-2
-                                    transition-all
-                                    ease-in-out
-                                    duration-200
-                                "
+                                class="block absolute w-5 h-1 bg-navy rounded-full top-2 transition-all ease-in-out duration-200"
                             ></span>
                             <span
-                                class="
-                                    block
-                                    absolute
-                                    w-8
-                                    h-1
-                                    bg-navy
-                                    rounded-full
-                                    top-5
-                                    transition-all
-                                    ease-in-out
-                                    duration-200
-                                "
+                                class="block absolute w-8 h-1 bg-navy rounded-full top-5 transition-all ease-in-out duration-200"
                             ></span>
                         </div>
                     </button>
@@ -73,27 +44,14 @@
         <!-- mobile menu -->
         <div
             :class="{ hidden: !menuIsOpen }"
-            class="
-                w-screen
-                h-[calc(100vh-4rem)]
-                fixed
-                text-navy
-                bg-white
-                px-6
-                text-xl
-                flex flex-col
-                justify-between
-                transition-all
-                ease-in-out
-                duration-200
-            "
+            class="w-screen h-[calc(100vh-4rem)] fixed text-navy bg-white px-6 text-xl flex flex-col justify-between transition-all ease-in-out duration-200"
         >
             <ul class="mt-6">
                 <li>
                     <router-link
                         @click="toggleMenu"
                         to="/"
-                        class="p-4 inline-block mb-2"
+                        class="p-4 inline-block mb-2 text-3xl font-bold"
                         >Home</router-link
                     >
                 </li>
@@ -101,7 +59,7 @@
                     <router-link
                         @click="toggleMenu"
                         to="/my-garden"
-                        class="p-4 inline-block mb-2"
+                        class="p-4 inline-block mb-2 text-3xl font-bold"
                         >My Garden</router-link
                     >
                 </li>
@@ -109,12 +67,12 @@
                     <router-link
                         @click="toggleMenu"
                         to="/new-buddy"
-                        class="p-4 inline-block mb-2"
+                        class="p-4 inline-block mb-2 text-3xl font-bold"
                         >New Buddy</router-link
                     >
                 </li>
             </ul>
-            <ul class="mb-6 text-sm">
+            <ul class="mb-6 text-xl">
                 <li class="mb-2">
                     <router-link
                         @click="toggleMenu"
@@ -124,7 +82,7 @@
                     >
                 </li>
                 <li
-                    class="mb-2 inline-block underline cursor-pointer"
+                    class="mb-2 text-xl inline-block underline cursor-pointer"
                     @click="
                         toggleMenu();
                         logout();

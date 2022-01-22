@@ -1,12 +1,33 @@
 <template>
-    <div>
-        <h1>This is the register page</h1>
-        <router-link to="/authenticate">Back</router-link>
-        <label for="email">E-Mail</label>
-        <input v-model="email" id="email" type="email" />
-        <label for="password">Password</label>
-        <input v-model="password" id="password" type="password" />
-        <button @click="register">Register</button>
+    <div class="flex flex-col justify-between text-center h-screen p-5">
+        <back-button />
+        <div>
+            <img
+                src="../assets/plant_care_illustration.png"
+                alt="men taking care of his plant"
+            />
+            <h1>Let's get started!</h1>
+
+            <p>Sign up to get this plant party started.</p>
+        </div>
+        <form class="flex flex-col gap-5">
+            <div class="form-element">
+                <label for="email">E-Mail</label>
+                <input v-model="email" id="email" type="email" />
+            </div>
+            <div class="form-element">
+                <label for="password">Password</label>
+                <input v-model="password" id="password" type="password" />
+            </div>
+            <button @click="register" class="button button--blue">
+                Register
+            </button>
+            <p>
+                Already registered?
+                <router-link class="underline" to="/login">Log in</router-link>
+                instead.
+            </p>
+        </form>
     </div>
 </template>
 
@@ -15,9 +36,11 @@ import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import AuthService from '@/services/AuthService';
+import BackButton from '@/components/BackButton.vue';
 
 export default defineComponent({
     name: 'Register',
+    components: { BackButton },
     setup() {
         const router = useRouter();
 

@@ -1,14 +1,14 @@
 <template>
     <OverlayLayout>
-        <div class="text-navy p-6">
+        <div class="flex flex-col gap-5">
             <h1>New Buddy</h1>
             <div>Add a plant to your collection.</div>
-            <div class="mt-10 flex-col">
-                <label for="plantName" class="block">Name</label>
+            <div>
+                <label for="plantName">Name</label>
                 <input id="plantName" v-model="plantName" class="input block" />
             </div>
-            <div class="mt-5">
-                <label for="plantType" class="block">Plant Type</label>
+            <div>
+                <label for="plantType">Plant Type</label>
                 <input id="plantType" v-model="plantType" class="input block" />
             </div>
             <button @click="cameraIsOpen = true" class="button">
@@ -38,26 +38,10 @@
                         >
                             <div class="h-8 w-8 relative close-button">
                                 <span
-                                    class="
-                                        block
-                                        absolute
-                                        w-5
-                                        h-1
-                                        bg-navy
-                                        rounded-full
-                                        top-2
-                                    "
+                                    class="block absolute w-5 h-1 bg-navy rounded-full top-2"
                                 ></span>
                                 <span
-                                    class="
-                                        block
-                                        absolute
-                                        w-8
-                                        h-1
-                                        bg-navy
-                                        rounded-full
-                                        top-5
-                                    "
+                                    class="block absolute w-8 h-1 bg-navy rounded-full top-5"
                                 ></span>
                             </div>
                         </button>
@@ -66,6 +50,7 @@
             </div>
 
             <img :src="imageSrc" alt="" v-show="image" />
+
             <div>Watering</div>
 
             <label for="waterslider">Amount</label>
@@ -110,31 +95,17 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
+        </div>
 
-            <div>Fertilizing</div>
+        <div>
+            <h3>Fertilizing</h3>
 
             <label for="fertilizeslider">Amount</label>
             <input
@@ -146,7 +117,6 @@
                 step="1"
                 v-model="fertilizingAmount"
             />
-
             <div
                 v-for="(_, index) in fertilizingData"
                 :key="index"
@@ -178,26 +148,10 @@
             >
                 <div class="h-8 w-8 relative plus-button">
                     <span
-                        class="
-                            block
-                            absolute
-                            w-5
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-2
-                        "
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
                     ></span>
                     <span
-                        class="
-                            block
-                            absolute
-                            w-8
-                            h-1
-                            bg-white
-                            rounded-full
-                            top-5
-                        "
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
                     ></span>
                 </div>
             </button>
@@ -220,6 +174,7 @@ import Camera from 'simple-vue-camera';
 import { storage } from '@/services/firebase';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import router from '@/router';
 
 export default defineComponent({
     name: 'NewBuddy',
@@ -257,44 +212,50 @@ export default defineComponent({
         };
 
         const addPlant = async () => {
-            let imageReference = null;
-            if (image.value)
-                imageReference = await saveBlobToFirestore(image.value);
+            let imageId = null;
+            if (image.value) imageId = await saveBlobToFirestore(image.value);
 
-            const plantReference = await add({
-                id: '',
-                name: plantName.value,
-                type: plantType.value,
-                wateringAmount: wateringAmount.value,
-                fertilizingAmount: fertilizingAmount.value,
-                image: imageReference,
-            });
-            const userUuid = await AuthService.getUserUuid();
-            const userReference = userUuid
-                ? await UserService.getDocReference(userUuid)
-                : null;
-            if (plantReference && userReference) {
-                wateringData.value.forEach((notification) => {
-                    NotificationService.add({
-                        title: `${plantName.value} (${plantType.value}) is thirsty!`,
-                        body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
-                        day: notification.day,
-                        time: notification.time,
-                        plantReference: plantReference,
-                        userReference: userReference,
-                    });
+            try {
+                const plantReference = await add({
+                    id: '',
+                    name: plantName.value,
+                    type: plantType.value,
+                    wateringAmount: wateringAmount.value,
+                    fertilizingAmount: fertilizingAmount.value,
+                    image: imageId,
                 });
+                const userUuid = await AuthService.getUserUuid();
+                const userReference = userUuid
+                    ? await UserService.getDocReference(userUuid)
+                    : null;
+                if (plantReference && userReference) {
+                    wateringData.value.forEach((notification) => {
+                        NotificationService.add({
+                            title: `${plantName.value} (${plantType.value}) is thirsty!`,
+                            body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
+                            day: notification.day,
+                            type: 'water',
+                            time: notification.time,
+                            plantReference: plantReference,
+                            userReference: userReference,
+                        });
+                    });
 
-                fertilizingData.value.forEach((notification) => {
-                    NotificationService.add({
-                        title: `Fertilize ${plantName.value} (${plantType.value})!`,
-                        body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
-                        day: notification.day,
-                        time: notification.time,
-                        plantReference: plantReference,
-                        userReference: userReference,
+                    fertilizingData.value.forEach((notification) => {
+                        NotificationService.add({
+                            title: `Fertilize ${plantName.value} (${plantType.value})!`,
+                            body: `Don't forget to fertilize your little buddy (Amount: ${wateringAmount.value}).`,
+                            type: 'fertilize',
+                            day: notification.day,
+                            time: notification.time,
+                            plantReference: plantReference,
+                            userReference: userReference,
+                        });
                     });
-                });
+                }
+                await router.push('/my-garden');
+            } catch (e) {
+                console.log('sth went wrong', e);
             }
         };
 
@@ -309,13 +270,11 @@ export default defineComponent({
         };
 
         const saveBlobToFirestore = async (blob: Blob) => {
-            console.log('storing blob');
-            const storageReference = storageRef(storage, uuidv4());
-
-            // 'file' comes from the Blob or File API
+            const imageId = uuidv4();
+            const storageReference = storageRef(storage, imageId);
             await uploadBytes(storageReference, blob);
 
-            return storageReference;
+            return imageId;
         };
 
         return {
