@@ -18,6 +18,7 @@ export const useList = <T>(endpoint: Service<T>) => {
     };
 
     const add = async (item: T, isRefetching = false) => {
+        console.log('addind stuff');
         isLoading.value = true;
         try {
             const doc = await endpoint.add(item);

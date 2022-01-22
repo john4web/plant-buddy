@@ -38,26 +38,10 @@
                         >
                             <div class="h-8 w-8 relative close-button">
                                 <span
-                                    class="
-                                        block
-                                        absolute
-                                        w-5
-                                        h-1
-                                        bg-navy
-                                        rounded-full
-                                        top-2
-                                    "
+                                    class="block absolute w-5 h-1 bg-navy rounded-full top-2"
                                 ></span>
                                 <span
-                                    class="
-                                        block
-                                        absolute
-                                        w-8
-                                        h-1
-                                        bg-navy
-                                        rounded-full
-                                        top-5
-                                    "
+                                    class="block absolute w-8 h-1 bg-navy rounded-full top-5"
                                 ></span>
                             </div>
                         </button>
@@ -66,6 +50,7 @@
             </div>
 
             <img :src="imageSrc" alt="" v-show="image" />
+
             <div>Watering</div>
 
             <label for="waterslider">Amount</label>
@@ -79,100 +64,99 @@
                 v-model="wateringAmount"
             />
 
-                <div
-                    v-for="(_, index) in wateringData"
-                    :key="index"
-                    class="border-2 mb-5 p-5 relative"
-                >
-                    <NotificationInput v-model="wateringData[index]" />
-                    <button
-                        @click="deleteWateringNotification(index)"
-                        v-if="index !== 0"
-                        class="absolute -top-2 -right-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="#0B486B"
-                        >
-                            <path
-                                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-
+            <div
+                v-for="(_, index) in wateringData"
+                :key="index"
+                class="border-2 mb-5 p-5 relative"
+            >
+                <NotificationInput v-model="wateringData[index]" />
                 <button
-                    class="p-2 rounded-full bg-navy"
-                    @click="addNewWaterNotification"
+                    @click="deleteWateringNotification(index)"
+                    v-if="index !== 0"
+                    class="absolute -top-2 -right-2"
                 >
-                    <div class="h-8 w-8 relative plus-button">
-                        <span
-                            class="block absolute w-5 h-1 bg-white rounded-full top-2"
-                        ></span>
-                        <span
-                            class="block absolute w-8 h-1 bg-white rounded-full top-5"
-                        ></span>
-                    </div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#0B486B"
+                    >
+                        <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                        />
+                    </svg>
                 </button>
             </div>
 
-            <div>
-                <h3>Fertilizing</h3>
-
-                <label for="fertilizeslider">Amount</label>
-                <input
-                    id="fertilizeslider"
-                    type="range"
-                    class="w-full"
-                    min="1"
-                    max="5"
-                    step="1"
-                    v-model="fertilizingAmount"
-                />
-                <div
-                    v-for="(_, index) in fertilizingData"
-                    :key="index"
-                    class="border-2 mb-5 p-5 relative"
-                >
-                    <NotificationInput v-model="fertilizingData[index]" />
-                    <button
-                        @click="deleteFertilizingNotification(index)"
-                        v-if="index !== 0"
-                        class="absolute -top-2 -right-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="#3B8686"
-                        >
-                            <path
-                                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                            />
-                        </svg>
-                    </button>
+            <button
+                class="p-2 rounded-full bg-navy"
+                @click="addNewWaterNotification"
+            >
+                <div class="h-8 w-8 relative plus-button">
+                    <span
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                    ></span>
+                    <span
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                    ></span>
                 </div>
+            </button>
+        </div>
 
+        <div>
+            <h3>Fertilizing</h3>
+
+            <label for="fertilizeslider">Amount</label>
+            <input
+                id="fertilizeslider"
+                type="range"
+                class="w-full"
+                min="1"
+                max="5"
+                step="1"
+                v-model="fertilizingAmount"
+            />
+            <div
+                v-for="(_, index) in fertilizingData"
+                :key="index"
+                class="border-2 mb-5 p-5 relative"
+            >
+                <NotificationInput v-model="fertilizingData[index]" />
                 <button
-                    class="p-2 rounded-full bg-drakgreen"
-                    @click="addNewFertilizingNotification"
+                    @click="deleteFertilizingNotification(index)"
+                    v-if="index !== 0"
+                    class="absolute -top-2 -right-2"
                 >
-                    <div class="h-8 w-8 relative plus-button">
-                        <span
-                            class="block absolute w-5 h-1 bg-white rounded-full top-2"
-                        ></span>
-                        <span
-                            class="block absolute w-8 h-1 bg-white rounded-full top-5"
-                        ></span>
-                    </div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#3B8686"
+                    >
+                        <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
+                        />
+                    </svg>
                 </button>
-
-                <button class="button" @click="addPlant">Add plant</button>
             </div>
+
+            <button
+                class="p-2 rounded-full bg-drakgreen"
+                @click="addNewFertilizingNotification"
+            >
+                <div class="h-8 w-8 relative plus-button">
+                    <span
+                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
+                    ></span>
+                    <span
+                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
+                    ></span>
+                </div>
+            </button>
+
+            <button class="button" @click="addPlant">Add plant</button>
         </div>
     </OverlayLayout>
 </template>
@@ -228,35 +212,34 @@ export default defineComponent({
         };
 
         const addPlant = async () => {
-            let imageReference = null;
-            if (image.value)
-                imageReference = await saveBlobToFirestore(image.value);
+            let imageId = null;
+            if (image.value) imageId = await saveBlobToFirestore(image.value);
 
             try {
-            const plantReference = await add({
-                id: '',
-                name: plantName.value,
-                type: plantType.value,
-                wateringAmount: wateringAmount.value,
-                fertilizingAmount: fertilizingAmount.value,
-                image: imageReference,
-            });
-            const userUuid = await AuthService.getUserUuid();
-            const userReference = userUuid
-                ? await UserService.getDocReference(userUuid)
-                : null;
-            if (plantReference && userReference) {
-                wateringData.value.forEach((notification) => {
-                    NotificationService.add({
-                        title: `${plantName.value} (${plantType.value}) is thirsty!`,
-                        body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
-                        day: notification.day,
-                        type: 'water',
-                        time: notification.time,
-                        plantReference: plantReference,
-                        userReference: userReference,
-                    });
+                const plantReference = await add({
+                    id: '',
+                    name: plantName.value,
+                    type: plantType.value,
+                    wateringAmount: wateringAmount.value,
+                    fertilizingAmount: fertilizingAmount.value,
+                    image: imageId,
                 });
+                const userUuid = await AuthService.getUserUuid();
+                const userReference = userUuid
+                    ? await UserService.getDocReference(userUuid)
+                    : null;
+                if (plantReference && userReference) {
+                    wateringData.value.forEach((notification) => {
+                        NotificationService.add({
+                            title: `${plantName.value} (${plantType.value}) is thirsty!`,
+                            body: `Don't forget to give your little buddy water (Amount: ${wateringAmount.value}).`,
+                            day: notification.day,
+                            type: 'water',
+                            time: notification.time,
+                            plantReference: plantReference,
+                            userReference: userReference,
+                        });
+                    });
 
                     fertilizingData.value.forEach((notification) => {
                         NotificationService.add({
@@ -287,13 +270,11 @@ export default defineComponent({
         };
 
         const saveBlobToFirestore = async (blob: Blob) => {
-            console.log('storing blob');
-            const storageReference = storageRef(storage, uuidv4());
-
-            // 'file' comes from the Blob or File API
+            const imageId = uuidv4();
+            const storageReference = storageRef(storage, imageId);
             await uploadBytes(storageReference, blob);
 
-            return storageReference;
+            return imageId;
         };
 
         return {
