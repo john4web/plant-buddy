@@ -35,12 +35,21 @@
         @apply bg-grey rounded-3xl p-4;
     }
 
+    .button--blue {
+        background-color: var(--blue);
+        color: white;
+    }
+
     .button--round {
         @apply w-12 h-12 text-3xl flex items-center justify-center
     }
 
     label {
-        @apply text-sm mt-4 uppercase flex w-full;
+        @apply text-sm uppercase flex w-full;
+    }
+
+    .form-element {
+        @apply flex flex-col gap-1;
     }
 
     input {

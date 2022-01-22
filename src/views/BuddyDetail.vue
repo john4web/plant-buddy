@@ -1,20 +1,6 @@
 <template>
     <div v-if="plant" class="flex flex-col gap-5">
-        <button
-            class="button button--round z-10 m-5 bg-white"
-            @click="$router.back()"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
-                />
-            </svg>
-        </button>
+        <back-button />
         <div class="bg-green-300 w-full h-2/6 absolute top-0 left-0 z-0" />
         <div class="flex flex-col gap-3 bg-white z-10 mt-40 p-10 rounded-3xl">
             <section>
@@ -42,9 +28,11 @@ import { Plant } from '@/types';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
+import BackButton from '@/components/BackButton.vue';
 
 export default defineComponent({
     name: 'BuddyDetail',
+    components: { BackButton },
     setup() {
         const route = useRoute();
         const router = useRouter();
