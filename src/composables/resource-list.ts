@@ -1,15 +1,16 @@
 import { Ref, ref } from 'vue';
 import { Service } from '@/types';
+import { QueryConstraint } from 'firebase/firestore';
 
 export const useList = <T>(endpoint: Service<T>) => {
     const isLoading = ref(false);
     const error = ref(false);
     const data: Ref<T[] | null> = ref(null);
 
-    const getList = async () => {
+    const getList = async (queryConstraints: QueryConstraint[] = []) => {
         isLoading.value = true;
         try {
-            const response = await endpoint.getAll();
+            const response = await endpoint.getAll(queryConstraints);
             data.value = response.docs.map((doc) => doc.data());
         } catch (e) {
             error.value = true;

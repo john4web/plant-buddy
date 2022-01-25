@@ -4,8 +4,9 @@
             :to="`/buddy-detail/${plant.id}`"
             class="flex flex-col gap-1"
         >
+            <div v-if="isLoading" class="card__image h-40" />
             <img
-                v-if="plant.image"
+                v-else
                 class="card__image object-cover h-40"
                 :src="imageSrc"
                 :alt="plant.name"
@@ -19,9 +20,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
-import { ref as storageRef, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/services/firebase';
+import { defineComponent } from 'vue';
+import { useFileStorage } from '@/composables/fileStorage';
 
 export default defineComponent({
     name: 'PlantCard',
@@ -32,19 +32,11 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const imageSrc = ref('');
-
-        onMounted(async () => {
-            imageSrc.value = await getImageUrl();
-        });
-
-        const getImageUrl = async () => {
-            return await getDownloadURL(storageRef(storage, props.plant.image));
-        };
+        const { imageSrc, isLoading } = useFileStorage(props.plant.image);
 
         return {
             imageSrc,
-            getImageUrl,
+            isLoading,
         };
     },
 });

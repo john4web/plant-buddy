@@ -242,6 +242,7 @@ export default defineComponent({
                             time: notification.time,
                             plantReference: plantReference,
                             userReference: userReference,
+                            plantId: plantReference.id,
                         });
                     });
 
@@ -254,6 +255,7 @@ export default defineComponent({
                             time: notification.time,
                             plantReference: plantReference,
                             userReference: userReference,
+                            plantId: plantReference.id,
                         });
                     });
                 }

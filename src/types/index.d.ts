@@ -2,11 +2,14 @@ import {
     DocumentReference,
     DocumentSnapshot,
     QuerySnapshot,
+    QueryConstraint,
 } from 'firebase/firestore';
 
 export interface Service<T> {
     add(item: T): Promise<DocumentReference<T> | void>;
-    getAll(): Promise<QuerySnapshot<T>>;
+    getAll(
+        queryConstraints: QueryConstraint[] = null
+    ): Promise<QuerySnapshot<T>>;
     get(id: string): Promise<DocumentSnapshot<T>>;
 }
 
@@ -32,4 +35,5 @@ export type Notification = {
     type: string;
     userReference: DocumentReference<User>;
     plantReference: DocumentReference<Plant>;
+    plantId: string;
 };

@@ -8,6 +8,7 @@ import {
     query,
     where,
     QueryDocumentSnapshot,
+    QueryConstraint,
 } from 'firebase/firestore';
 import { Notification, Service } from '@/types';
 import AuthService from '@/services/AuthService';
@@ -26,16 +27,15 @@ class NotificationService implements Service<Notification> {
         return getDoc<Notification>(doc(this.notificationsCollection, id));
     };
 
-    getAll = async () => {
+    getAll = async (queryConstraints: QueryConstraint[] = []) => {
         const userUuid = await AuthService.getUserUuid();
         const userReference = userUuid
             ? await UserService.getDocReference(userUuid)
             : null;
-        const currentDay = new Date().getDay();
         const q = query(
             this.notificationsCollection,
             where('userReference', '==', userReference),
-            where('day', '==', currentDay.toString())
+            ...queryConstraints
         );
 
         return getDocs<Notification>(q);

@@ -55,9 +55,14 @@
                     v-for="(notification, i) in notifications"
                     :key="i"
                     class="card"
-                    :class="`card--${notification.type}`"
+                    :class="{
+                        'bg-lightblue': notification.type === 'water',
+                        'bg-lightred': notification.type === 'fertilize',
+                    }"
                 >
-                    {{ notification.title }}
+                    <router-link :to="`/buddy-detail/${notification.plantId}`">
+                        {{ notification.title }}
+                    </router-link>
                 </li>
             </ul>
         </section>
@@ -73,6 +78,7 @@ import PlantCard from '@/components/PlantCard.vue';
 import PlantService from '@/services/PlantService';
 import { useList } from '@/composables/resource-list';
 import NotificationService from '@/services/NotificationService';
+import { where } from 'firebase/firestore';
 
 export default defineComponent({
     name: 'Home',
@@ -94,7 +100,9 @@ export default defineComponent({
         } = useList(NotificationService);
 
         getPlantList();
-        getNotificationList();
+
+        const currentDay = new Date().getDay();
+        getNotificationList([where('day', '==', currentDay.toString())]);
 
         return {
             isLoadingNotifications,
@@ -105,13 +113,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped>
-.card--fertilize {
-    background-color: var(--green-light);
-}
-
-.card--water {
-    background-color: var(--blue-light);
-}
-</style>
