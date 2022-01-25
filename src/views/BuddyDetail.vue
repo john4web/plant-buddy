@@ -21,10 +21,10 @@
                     The perfect amount of water for your plant:
                 </div>
                 <amount-indicator
-                    :amount="plant.wateringAmount"
+                    :amount="parseInt(plant.wateringAmount)"
                     color="bg-blue"
                 />
-                <div v-if="waterNotifications.length > 0">
+                <div v-if="waterNotifications && waterNotifications.length > 0">
                     <h3>Your Reminders</h3>
                     <ul class="flex flex-col gap-2 mt-3">
                         <li
@@ -49,10 +49,15 @@
                     The perfect amount of fertilizer for your plant:
                 </div>
                 <amount-indicator
-                    :amount="plant.wateringAmount"
+                    :amount="parseInt(plant.wateringAmount)"
                     color="bg-red"
                 />
-                <div v-if="fertilizingNotifications.length > 0">
+                <div
+                    v-if="
+                        fertilizingNotifications &&
+                        fertilizingNotifications.length > 0
+                    "
+                >
                     <h3>Your Reminders</h3>
                     <ul class="flex flex-col gap-2 mt-3">
                         <li

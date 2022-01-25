@@ -8,9 +8,11 @@ export const useFileStorage = (imageReference: string) => {
 
     onMounted(async () => {
         isLoading.value = true;
-        imageSrc.value = await getDownloadURL(
-            storageRef(storage, imageReference)
-        );
+        if (imageReference) {
+            imageSrc.value = await getDownloadURL(
+                storageRef(storage, imageReference)
+            );
+        }
         isLoading.value = false;
     });
     return {

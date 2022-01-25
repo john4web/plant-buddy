@@ -15,7 +15,15 @@
                 The picture will be useful for identifying every plant in your
                 garden.
             </p>
-            <button @click="cameraIsOpen = true" class="button">
+            <button
+                @click="cameraIsOpen = true"
+                class="button flex gap-3 justify-center items-center"
+            >
+                <img
+                    src="../assets/camera.png"
+                    alt="camera icon"
+                    class="w-8 opacity-50 -mt-2"
+                />
                 Open Camera
             </button>
             <div
@@ -34,22 +42,13 @@
                                 snapshot();
                                 cameraIsOpen = false;
                             "
-                            class="bg-white rounded-full w-16 h-16 mb-10"
+                            class="bg-white rounded-full w-16 h-16 mb-10 border-5 border-transparent outline-white"
                         ></button>
 
-                        <button
-                            @click="cameraIsOpen = false"
+                        <close-button
+                            @close="cameraIsOpen = false"
                             class="absolute top-5 left-5"
-                        >
-                            <div class="h-8 w-8 relative close-button">
-                                <span
-                                    class="block absolute w-5 h-1 bg-navy rounded-full top-2"
-                                ></span>
-                                <span
-                                    class="block absolute w-8 h-1 bg-navy rounded-full top-5"
-                                ></span>
-                            </div>
-                        </button>
+                        />
                     </div>
                 </camera>
             </div>
@@ -57,109 +56,75 @@
 
         <img :src="imageSrc" alt="" v-show="image" />
 
-        <div class="form-element">
+        <section>
             <h2>Watering</h2>
             <label for="waterslider">Amount</label>
-            <input
-                id="waterslider"
-                type="range"
-                class="w-full"
-                min="1"
-                max="5"
-                step="1"
-                v-model="wateringAmount"
-            />
+            <div class="flex bg-grey gap-2 items-center px-4 rounded-xl">
+                low
+                <input
+                    id="waterslider"
+                    type="range"
+                    min="1"
+                    max="5"
+                    step="1"
+                    v-model="wateringAmount"
+                />
+                high
+            </div>
             <h3>Reminder</h3>
             <p>When do you want to be reminded to water your plant?</p>
-            <div
-                v-for="(_, index) in wateringData"
-                :key="index"
-                class="border-2 mb-5 p-5 relative"
-            >
-                <span class="badge">{{ index + 1 }}</span>
-                <NotificationInput v-model="wateringData[index]" />
+            <div class="flex flex-col gap-4 mt-2">
+                <div v-for="(_, index) in wateringData" :key="index">
+                    <NotificationInput
+                        v-model="wateringData[index]"
+                        @delete="deleteWateringNotification(index)"
+                    />
+                </div>
                 <button
-                    @click="deleteWateringNotification(index)"
-                    v-if="index !== 0"
-                    class="absolute -top-2 -right-2"
+                    v-if="wateringData.length < 7"
+                    class="border border-gray-300 border-dashed rounded-full p-2"
+                    @click="addNewWaterNotification"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="#0B486B"
-                    >
-                        <path
-                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                        />
-                    </svg>
+                    + add reminder
                 </button>
             </div>
-
-            <button
-                class="p-2 rounded-full bg-navy"
-                @click="addNewWaterNotification"
-            >
-                <div class="h-8 w-8 relative plus-button">
-                    <span
-                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
-                    ></span>
-                    <span
-                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
-                    ></span>
-                </div>
-            </button>
-        </div>
-        <div class="form-element">
+        </section>
+        <section>
             <h2>Fertilizing</h2>
             <label for="fertilizeslider">Amount</label>
-            <input
-                id="fertilizeslider"
-                type="range"
-                class="w-full"
-                min="1"
-                max="5"
-                step="1"
-                v-model="fertilizingAmount"
-            />
-            <h3>Reminder</h3>
-            <p>When should we remind you to fertilize your plant?</p>
-            <div v-for="(_, index) in fertilizingData" :key="index">
-                <NotificationInput v-model="fertilizingData[index]" />
-                <button
-                    @click="deleteFertilizingNotification(index)"
-                    v-if="index !== 0"
-                    class="absolute -top-2 -right-2"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="#3B8686"
-                    >
-                        <path
-                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"
-                        />
-                    </svg>
-                </button>
+            <div class="flex bg-grey gap-2 items-center px-4 rounded-xl">
+                low
+                <input
+                    id="fertilizeslider"
+                    type="range"
+                    min="1"
+                    max="5"
+                    step="1"
+                    v-model="fertilizingAmount"
+                />
+                high
             </div>
 
-            <button
-                class="p-2 rounded-full bg-drakgreen"
-                @click="addNewFertilizingNotification"
-            >
-                <div class="h-8 w-8 relative plus-button">
-                    <span
-                        class="block absolute w-5 h-1 bg-white rounded-full top-2"
-                    ></span>
-                    <span
-                        class="block absolute w-8 h-1 bg-white rounded-full top-5"
-                    ></span>
+            <div>
+                <h3>Reminder</h3>
+                <p>When should we remind you to fertilize your plant?</p>
+                <div class="flex flex-col gap-4 mt-2">
+                    <div v-for="(_, index) in fertilizingData" :key="index">
+                        <NotificationInput
+                            v-model="fertilizingData[index]"
+                            @delete="deleteFertilizingNotification(index)"
+                        />
+                    </div>
+                    <button
+                        v-if="fertilizingData.length < 7"
+                        class="border border-gray-300 border-dashed rounded-full p-2"
+                        @click="addNewFertilizingNotification"
+                    >
+                        + add reminder
+                    </button>
                 </div>
-            </button>
-        </div>
+            </div>
+        </section>
 
         <button class="button button--blue" @click="addPlant">Add plant</button>
     </OverlayLayout>
@@ -179,10 +144,11 @@ import { storage } from '@/services/firebase';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import router from '@/router';
+import CloseButton from '@/components/CloseButton.vue';
 
 export default defineComponent({
     name: 'NewBuddy',
-    components: { OverlayLayout, NotificationInput, Camera },
+    components: { CloseButton, OverlayLayout, NotificationInput, Camera },
 
     setup() {
         const { add } = useList(PlantService);
@@ -306,20 +272,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.plus-button span {
-    width: 2rem;
-    top: 0.875rem;
-}
-
-.plus-button span:nth-child(1) {
-    transform: rotate(-90deg);
-}
-
-.plus-button {
-    border: 0;
-    border-radius: 50%;
-}
-
 input[type='range'] {
     height: 34px;
     -webkit-appearance: none;
@@ -337,13 +289,16 @@ input[type='range']::-webkit-slider-runnable-track {
     border: 0px solid #010101;
 }
 
-input[type='range']#fertilizeslider::-webkit-slider-runnable-track {
+input[type='range']#waterslider::-webkit-slider-runnable-track {
     background: #3b8686;
 }
 
+input[type='range']#fertilizeslider::-webkit-slider-runnable-track {
+    background: #dc8e55;
+}
+
 input[type='range']::-webkit-slider-thumb {
-    box-shadow: 1px 1px 1px #000031;
-    border: 1px solid #00001e;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
     height: 26px;
     width: 26px;
     border-radius: 15px;
@@ -358,13 +313,11 @@ input[type='range']::-moz-range-track {
     height: 11px;
     cursor: pointer;
     animate: 0.2s;
-    box-shadow: 1px 1px 1px #000000;
     background: #74a9d8;
     border-radius: 1px;
     border: 0px solid #010101;
 }
 input[type='range']::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000031;
     border: 1px solid #00001e;
     height: 26px;
     width: 26px;
@@ -385,41 +338,19 @@ input[type='range']::-ms-fill-lower {
     background: #74a9d8;
     border: 0px solid #010101;
     border-radius: 2px;
-    box-shadow: 1px 1px 1px #000000;
 }
 input[type='range']::-ms-fill-upper {
     background: #74a9d8;
     border: 0px solid #010101;
     border-radius: 2px;
-    box-shadow: 1px 1px 1px #000000;
 }
 input[type='range']::-ms-thumb {
     margin-top: 1px;
-    box-shadow: 1px 1px 1px #000031;
     border: 1px solid #00001e;
     height: 26px;
     width: 26px;
     border-radius: 15px;
     background: #ffffff;
     cursor: pointer;
-}
-
-.close-button span {
-    width: 2rem;
-    top: 0.875rem;
-}
-
-.close-button span:nth-child(1) {
-    transform: rotate(45deg);
-}
-
-.close-button span:nth-child(2) {
-    transform: rotate(-45deg);
-}
-
-.close-button {
-    background-color: #e8e8e8;
-    outline: 8px solid #e8e8e8;
-    border-radius: 50%;
 }
 </style>

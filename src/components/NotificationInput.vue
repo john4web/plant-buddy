@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between gap-5 align-stretch">
+    <div class="flex justify-between gap-2 align-stretch">
         <select
             class="bg-grey p-2 rounded-lg grow"
             :value="modelValue.day"
@@ -29,20 +29,17 @@
                 })
             "
         />
+        <close-button @close="$emit('delete')" />
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CloseButton from '@/components/CloseButton.vue';
 
 export default defineComponent({
     name: 'NotificationInput',
-
-    methods: {
-        updateValue: function (value: number) {
-            this.$emit('input', value);
-        },
-    },
+    components: { CloseButton },
     props: {
         modelValue: {
             type: Object,
