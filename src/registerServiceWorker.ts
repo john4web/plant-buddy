@@ -20,7 +20,6 @@ if (process.env.NODE_ENV === 'production') {
                                         'BPjg1ATlmZ8gvlgzNKdoNP3gD16Yq09MnYkPDpSh3to2CKU8zblyrKw5hWWWEIAtLPy0dX2kPW47jKY7owJO5Zs',
                                 }).then((token) => {
                                     if (token) {
-                                        console.log(user.uid);
                                         const userRef = doc(
                                             firestore,
                                             'users',
