@@ -39,7 +39,6 @@ class PlantService implements Service<Plant> {
 
     add = async (item: Plant) => {
         const plantsCollection = await this.getPlantsCollection();
-        console.log(plantsCollection);
         return addDoc<Plant>(plantsCollection, item);
     };
 }
