@@ -49,7 +49,7 @@
                     The perfect amount of fertilizer for your plant:
                 </div>
                 <amount-indicator
-                    :amount="parseInt(plant.wateringAmount)"
+                    :amount="parseInt(plant.fertilizingAmount)"
                     color="bg-red"
                 />
                 <div
