@@ -4,6 +4,10 @@ import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Authenticate from '@/views/Authenticate.vue';
+import MyGarden from '@/views/MyGarden.vue';
+import NewBuddy from '@/views/NewBuddy.vue';
+import BuddyDetail from '@/views/BuddyDetail.vue';
+import NotFound from '@/views/NotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -34,31 +38,25 @@ const routes: Array<RouteRecordRaw> = [
         path: '/my-garden',
         name: 'MyGarden',
         meta: { authRequired: true },
-        component: () =>
-            import(/* webpackChunkName: "my-garden" */ '@/views/MyGarden.vue'),
+        component: MyGarden,
     },
     {
         path: '/new-buddy',
         name: 'NewBuddy',
         meta: { authRequired: true },
-        component: () =>
-            import(/* webpackChunkName: "new-buddy" */ '@/views/NewBuddy.vue'),
+        component: NewBuddy,
     },
     {
         path: '/buddy-detail/:id',
         name: 'BuddyDetail',
         meta: { authRequired: true },
-        component: () =>
-            import(
-                /* webpackChunkName: "buddy-detail" */ '@/views/BuddyDetail.vue'
-            ),
+        component: BuddyDetail,
     },
     {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         meta: { authRequired: false },
-        component: () =>
-            import(/* webpackChunkName: "profile" */ '@/views/NotFound.vue'),
+        component: NotFound,
     },
 ];
 

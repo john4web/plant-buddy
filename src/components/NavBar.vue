@@ -73,14 +73,6 @@
                 </li>
             </ul>
             <ul class="mb-6 text-xl">
-                <li class="mb-2">
-                    <router-link
-                        @click="toggleMenu"
-                        to="/settings"
-                        class="inline-block underline"
-                        >Settings</router-link
-                    >
-                </li>
                 <li
                     class="mb-2 text-xl inline-block underline cursor-pointer"
                     @click="
